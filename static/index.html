@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Assorted endpoints for FTLabs Emblehsir</title>
+  </head>
+  <body>
+    <h1>FTLabs: Embelishr</h1>
+
+    <p>The data is loaded into the app via SAPI requests.</p>
+
+    <h2>Endpoints (NB, all behind SSO. Will be tokenized later.)</h2>
+
+    <ul>
+      <li>/embelish/:year/:word</li>  
+      <ul>
+        <li>e.g., <a href="/embelish/2016/europe" />Full data for 'Europe' mentions throughtout 2016</a></li>
+      </ul>
+      <li>/embelish/:year/:word?person=person</li>        
+      <ul>
+        <li>e.g., <a href="/embelish/summary/2016/europe?person=David%20Cameron" />All data for 'Europe' mentions involving David Cameron throughout 2016 </a></li>
+      </ul>
+      <li>/embelish/:year/:month/:word</li>  
+      <ul>
+        <li>e.g., <a href="/embelish/2016/02/europe" />Full data for 'Europe' mentions throughtout Febuary, 2016</a></li>
+      </ul>
+      <li>/embelish/:year/:word</li>  
+      <ul>
+        <li>e.g., <a href="/embelish/summary/2016/europe" />As above, but with a less verbose response.</a></li>
+      </ul>
+      
+    </ul>
+
+
+  </body>
+</html>
