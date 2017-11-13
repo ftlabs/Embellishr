@@ -1,5 +1,7 @@
 const debug = require('debug')('bin:lib:check-token');
 const S3O = require('@financial-times/s3o-middleware');
+const S3OAPI = require('@financial-times/s3o-middleware').authS3ONoRedirect;
+
 
 module.exports = (req, res, next) => {
 
@@ -9,7 +11,12 @@ module.exports = (req, res, next) => {
 
 	if(passedToken === undefined){
 		debug(`No token has been passed to service. Falling through to S3O`);
-		S3O(req, res, next);
+		if(req.originalUrl.includes('api')) {
+			S3OAPI(req, res, next);
+		}
+		else {
+			S3O(req, res, next);
+		}
 	} else if(passedToken === process.env.TOKEN){
 		debug(`Token was valid`);
 		next();

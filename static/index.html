@@ -13,23 +13,23 @@
     <h2>Endpoints (NB, all behind SSO. Will be tokenized later.)</h2>
 
     <ul>
-      <li>/embellish/:year/:word</li>  
+      <li>/api/:year/:word</li>  
       <ul>
         <li>e.g., <a href="/embellish/2016/europe" />Full data for 'Europe' mentions throughtout 2016</a></li>
       </ul>
-      <li>/embellish/:year/:word?person=person</li>        
+      <li>/api/:year/:word?person=person</li>        
       <ul>
         <li>e.g., <a href="/embellish/summary/2016/europe?person=David%20Cameron" />All data for 'Europe' mentions involving David Cameron throughout 2016 </a></li>
       </ul>
-      <li>/embellish/:year/:month/:word</li>  
+      <li>/api/:year/:month/:word</li>  
       <ul>
         <li>e.g., <a href="/embellish/2016/02/europe" />Full data for 'Europe' mentions throughtout Febuary, 2016</a></li>
       </ul>
-      <li>/embellish/summary/:year/:word</li>  
+      <li>/api/summary/:year/:word</li>  
       <ul>
         <li>e.g., <a href="/embellish/summary/2016/europe" />As above, but with a less verbose response.</a></li>
       </ul>
-      <li>/embellish/condensed/:year/:word</li>  
+      <li>/api/condensed/:year/:word</li>  
       <ul>
         <li>e.g., <a href="/embellish/summary/2016/europe" />Minimium view containg the indexCount for each month and associated facets</a></li>
       </ul>

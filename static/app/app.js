@@ -1,7 +1,8 @@
 const monthsCtx = document.getElementById("resultsChart").getContext('2d');
 const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
 "Sep", "Oct", "Nov", "Dec"]
-const api = new API;
+const api = new API();
+
 
 function renderChart() {
     var word = document.getElementById('searchWord').value;
