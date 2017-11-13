@@ -17,7 +17,6 @@ app.use(requestLogger);
 
 // these routes do *not* have s3o
 app.use('/static', express.static('static'));
-app.use('/app/dist', express.static('vue'));
 
 
 //TODO: Fix this to properly use token
@@ -34,15 +33,12 @@ if (process.env.BYPASS_TOKEN !== 'true') {
 
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname + '/static/index.html'));
- 
-  // res.render('home', {
-    
-  // });
+
 });
 
-// app.get('/app', (req, res) => {
-// 	res.sendFile(path.join(__dirname + '/static/app/index.html'));
-// });
+app.get('/app', (req, res) => {
+	res.sendFile(path.join(__dirname + '/static/app/index.html'));
+});
 
 app.get('/embellish/:year([0-9]{4})/:month([0-9]{2})/:word', (req, res) => {
   const year = parseInt(req.params.year);

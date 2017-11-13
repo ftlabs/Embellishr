@@ -5,6 +5,7 @@
     <title>Assorted endpoints for FTLabs Emblehsir</title>
   </head>
   <body>
+    <a href="/app">App</a>
     <h1>FTLabs: Embellishr</h1>
 
     <p>The data is loaded into the app via SAPI requests.</p>
@@ -24,11 +25,14 @@
       <ul>
         <li>e.g., <a href="/embellish/2016/02/europe" />Full data for 'Europe' mentions throughtout Febuary, 2016</a></li>
       </ul>
-      <li>/embellish/:year/:word</li>  
+      <li>/embellish/summary/:year/:word</li>  
       <ul>
         <li>e.g., <a href="/embellish/summary/2016/europe" />As above, but with a less verbose response.</a></li>
       </ul>
-      
+      <li>/embellish/condensed/:year/:word</li>  
+      <ul>
+        <li>e.g., <a href="/embellish/summary/2016/europe" />Minimium view containg the indexCount for each month and associated facets</a></li>
+      </ul>
     </ul>
 
 
