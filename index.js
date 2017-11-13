@@ -17,16 +17,17 @@ app.use(requestLogger);
 
 // these routes do *not* have s3o
 app.use('/static', express.static('static'));
+app.use('/app/dist', express.static('vue'));
+
 
 //TODO: Fix this to properly use token
 const TOKEN = process.env.TOKEN;
-// if (! TOKEN ) {
-//   throw new Error('ERROR: TOKEN not specified in env');
-// }
+if (! TOKEN ) {
+  throw new Error('ERROR: TOKEN not specified in env');
+}
 
 // these route *do* use s3o
 app.set('json spaces', 2);
-
 if (process.env.BYPASS_TOKEN !== 'true') {
 	app.use(validateRequest);
 }
@@ -39,7 +40,11 @@ app.get('/', (req, res) => {
   // });
 });
 
-app.get('/embelish/:year([0-9]{4})/:month([0-9]{2})/:word', (req, res) => {
+// app.get('/app', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/static/app/index.html'));
+// });
+
+app.get('/embellish/:year([0-9]{4})/:month([0-9]{2})/:word', (req, res) => {
   const year = parseInt(req.params.year);
   const month = parseInt(req.params.month);
   const word = req.params.word;
@@ -51,7 +56,7 @@ app.get('/embelish/:year([0-9]{4})/:month([0-9]{2})/:word', (req, res) => {
   })
 });
 
-app.get('/embelish/:year([0-9]{4})/:word', (req, res) => {
+app.get('/embellish/:year([0-9]{4})/:word', (req, res) => {
   const year = parseInt(req.params.year);
   const word = req.params.word;
   embelish.lookupWordByYear(word, year).then(results => {
@@ -62,10 +67,21 @@ app.get('/embelish/:year([0-9]{4})/:word', (req, res) => {
   })
 });
 
-app.get('/embelish/summary/:year([0-9]{4})/:word', (req, res) => {
+app.get('/embellish/summary/:year([0-9]{4})/:word', (req, res) => {
   const year = parseInt(req.params.year);
   const word = req.params.word;
   embelish.yearSummary(word, year).then(results => {
+    let response = {};
+    response['searchTerm'] = word;
+    response[year] = results;
+    res.json(response);    
+  })  
+});
+
+app.get('/embellish/condensed/:year([0-9]{4})/:word', (req, res) => {
+  const year = parseInt(req.params.year);
+  const word = req.params.word;
+  embelish.condensedSummary(word, year).then(results => {
     let response = {};
     response['searchTerm'] = word;
     response[year] = results;

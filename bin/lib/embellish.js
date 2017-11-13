@@ -61,6 +61,36 @@ function yearSummary(word, year) {
     });
 }
 
+function condensedSummary(word, year) {
+    let summaryResponse = {
+        months: [],
+        people: {}
+    }
+    return _fetchYear(word, year).then(responses => {
+        for(let response of responses) {
+            let indexCount = null;
+            let facets = null;
+            if(response.hasOwnProperty('sapiObj')) {
+                indexCount = response.sapiObj.results[0].indexCount;
+                facets = response.sapiObj.results[0].facets;
+            }
+            summaryResponse.months.push(indexCount);              
+            if(facets) {
+                let people = facets.filter(obj => obj.name === 'people').pop() 
+                for(let person of people.facetElements) {
+                    if(!(person.name in summaryResponse.people)) {
+                        summaryResponse.people[person.name] = new Array(12).fill(0);
+                    }
+                    let month = new Date(response.params.month).getMonth();
+                    if(person.count != null)
+                    summaryResponse.people[person.name][month] = person.count;
+                }  
+            }
+        }
+        return summaryResponse;
+    })
+}
+
 /**
  * Create a summary of each month, extracting key information
  * @param {*} response 
@@ -70,12 +100,14 @@ function _createSummary(response, peopleSize = 10) {
     const summary = {}
     let results = response.sapiObj.results.pop();
     let count = results.indexCount;
+    let articles = results.results;
     summary.count = count;
     let people = [];
     if(results.hasOwnProperty('facets') && (results.facets.length != 0)) {
         people = results.facets.pop().facetElements;;
     }
     summary.people = people.length > peopleSize ? people.slice(0,peopleSize) : people;
+    summary.articles = articles.map((article) => article.title.title);
     return summary;
 }
 /**
@@ -100,10 +132,8 @@ function lookupWordByMonth(word, year, month, queryParams={}) {
     })
 }
 
-
-  
-
 module.exports = {
+    condensedSummary,
     lookupWordByYear,
     lookupWordByMonth,
     yearSummary

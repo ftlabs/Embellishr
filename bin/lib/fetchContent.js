@@ -65,7 +65,7 @@ function constructSAPIQuery( params ) {
 		facets: {"names":[ "people"], "maxElements":-1}
 	};
 	const combined = Object.assign({}, defaults, params);
-	console.log(combined)
+	//console.log(combined)
 	let queryString = combined.queryString;
 	if (combined.constraints.length > 0 ) {
 		// NB: not promises...
