@@ -17,6 +17,7 @@ app.use(requestLogger);
 
 // these routes do *not* have s3o
 app.use('/static', express.static('static'));
+app.use('/app', express.static('app'));
 
 
 //TODO: Fix this to properly use token
@@ -35,8 +36,12 @@ app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname + '/static/index.html'));
 });
 
+// app.get('/app', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/static/app/index.html'));
+// });
+
 app.get('/app', (req, res) => {
-	res.sendFile(path.join(__dirname + '/static/app/index.html'));
+  res.sendFile(path.join(__dirname + '/app/dist/index.html'));
 });
 
 app.get('/api/:year([0-9]{4})/:month([0-9]{2})/:word', (req, res) => {

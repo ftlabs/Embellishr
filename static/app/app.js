@@ -3,7 +3,6 @@ const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
 "Sep", "Oct", "Nov", "Dec"]
 const api = new API();
 
-
 function renderChart() {
     var word = document.getElementById('searchWord').value;
     var year = document.getElementById('searchYear').value;

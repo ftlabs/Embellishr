@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client-dev": "cross-env NODE_ENV=production webpack --watch --progress --hide-modules",
+    "client-prod": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "heroku-postbuild": "NODE_ENV=production webpack --progress --hide-modules"
   },
   "repository": {
     "type": "git",
@@ -35,9 +37,27 @@
     "rss": "^1.2.1",
     "striptags": "^2.1.1",
     "uuid": "^3.0.1",
-    "xml2js": "^0.4.17"
+    "xml2js": "^0.4.17",
+    "chart.js": "^2.7.1",
+    "vue": "^2.4.4",
+    "vue-chartjs": "^3.0.2",
+    "vue-select": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
   },
   "engines": {
     "node": "> 6.11.0 < 7.0.0"
   }
+  
 }
