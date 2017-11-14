@@ -7,7 +7,7 @@
     "start": "node index.js",
     "client-dev": "cross-env NODE_ENV=production webpack --watch --progress --hide-modules",
     "client-prod": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "heroku-postbuild": "NODE_ENV=production webpack --progress --hide-modules"
+    "heroku-postbuild": "webpack --progress --hide-modules"
   },
   "repository": {
     "type": "git",
