@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import NavHeader from './components/NavHeader'
-import GraphView from './GraphView'
+import NavHeader from './components/general/NavHeader'
+import GraphView from './views/GraphView'
 
 export default {
   name: 'app',
@@ -17,7 +17,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
