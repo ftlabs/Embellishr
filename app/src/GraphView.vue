@@ -8,23 +8,23 @@
             <div class="col-md-5" style="margin: 0 auto;">
                 <form>
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Word</label>
-                        <input :disabled="searchCompleted" v-model="word" type="text" class="form-control" id="searchWord" placeholder="e.g. Europe">
+                        <label for="searchWord">Word</label>
+                        <input v-model="word" type="text" class="form-control" id="searchWord" placeholder="e.g. Europe">
                         <label for="yearSelect">Year</label>
-                        <select :disabled="searchCompleted" placeholder="Select year" id="yearSelect" v-model="year" data-size="10" class="form-control" >
+                        <select placeholder="Select year" id="yearSelect" v-model="year" data-size="10" class="form-control" >
                             <option v-for="option in yearList" :value="option" :key="option">
                                 {{ option }}
                             </option>
                         </select>
                     </div>
                 </form>
-                <button :disabled="word == ''" v-show="!searchCompleted" @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
-                <button v-show="searchCompleted" @click="clearResults()" class="btn btn-info btn-sm">Reset</button>
+                <button :disabled="word == ''"  @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
+                <button v-show="searchCompleted" @click="clearResults()" class="btn btn-default btn-sm">Reset</button>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="float-right" v-if="searchCompleted">
+                <div class="float-right" v-show="searchCompleted">
                     <multiselect style="width:500px;"
                     @select="personSelected" 
                     show-labels="true"
@@ -97,7 +97,6 @@
                 let year = new Date().getFullYear();
                 for (var i = 1980; i != year; year--) this.$data.yearList.push(`${year}`)
                 this.$data.year = this.$data.yearList[0];
-                return years;
             },
             
     
@@ -107,10 +106,7 @@
                 this.$data.peopleList = [];
                 this.$data.year = this.$data.yearList[0];
                 this.$data.word = "";
-                this.$data.resultGraph = null;
-                //this.$data.personGraph = null;
                 this.$data.searchCompleted = false;
-
             },
     
             fetchResults() {
@@ -127,31 +123,13 @@
                 });
             },
     
-            createResultData(months) {
-                let label = `Mentions of "${this.$data.word}" over ${this.$data.year}`
-                this.$data.resultGraph = {
-                    labels: labels,
-                    datasets: [{
-                        label: this.$data.word == "" ? "" : label,
-                        data: this.$data.word == "" ? [] : months,
-                        backgroundColor: [
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 2
-                    }]
-                }
-                this.$refs.resultsGraph.update();
-            },
-    
             initGraphs() {
+
                 this.$data.personGraph = {
                     labels: labels,
                     datasets: [{
-                        label: this.person == "" ? "" : this.person,
-                        data: this.person == "" ? [] : personData,
+                        label: '',
+                        data: [],
                         backgroundColor: [
                             'rgba(0, 0, 255, 0.2)'
                         ],
@@ -161,23 +139,35 @@
                         borderWidth: 2
                     }]
                 }
+
+                this.$data.resultGraph = {
+                    labels: labels,
+                    datasets: [{
+                        label: "",
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                }
+            },
+
+            createResultData(months) {
+                let label = `Mentions of "${this.$data.word}" over ${this.$data.year}`
+                this.$set(this.$data.resultGraph.datasets[0], "data", months)
+                this.$set(this.$data.resultGraph.datasets[0], "label", label)
+                this.$refs.resultsGraph.update();
             },
     
             createPersonData() {
                 let personData = this.$data.peopleMap[this.$data.person];
                 let label = `Mentions of ${this.person} and "${this.word}" over ${this.year}`;
-                this.$set(this.$data.personGraph, "datasets", [])
-                this.$data.personGraph.datasets.push({
-                    label: this.person == "" ? "" : this.person,
-                    data: this.person == "" ? [] : personData,
-                    backgroundColor: [
-                        'rgba(0, 0, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(0, 0, 255, 1)'
-                    ],
-                    borderWidth: 2
-                });
+                this.$set(this.$data.personGraph.datasets[0], "data", personData)
+                this.$set(this.$data.personGraph.datasets[0], "label", label)
                 this.$refs.personGraph.update();
             }
     
