@@ -9,9 +9,13 @@
                 <form>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Word</label>
-                        <input v-model="word" type="text" class="form-control" id="searchWord" placeholder="Europe">
+                        <input v-model="word" type="text" class="form-control" id="searchWord" placeholder="e.g. Europe">
                         <label for="exampleFormControlInput1">Year</label>
-                        <input v-model="year" min="1990" max="2050" type="number" class="form-control" id="searchYear" placeholder="2016">
+                        <select placeholder="Select year" v-model="year" data-size="10" class="form-control" >
+                            <option v-for="option in populateYears()" :value="option" :key="option">
+                                {{ option }}
+                            </option>
+                        </select>
                     </div>
                 </form>
                 <button v-show="!searchCompleted" @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
@@ -21,9 +25,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="float-right" v-if="searchCompleted">
-                    <vue-select style="width:500px;" placeholder="Select a person" v-model="person" :options="peopleList"></vue-select>
+                    <vue-select :on-change="personSelected" style="width:500px;" placeholder="Select a person" v-model="person" :options="peopleList"></vue-select>
                     <small>Found <strong>{{peopleList.length}}</strong> people </small>
-                    <button @click="createPersonData()" class="btn btn-primary btn-sm float-right">Show graph</button>
                 </div>
             </div>
         </div>
@@ -70,12 +73,23 @@
     
         mounted() {
             this.initGraphs();
+            this.populateYears();
         },
     
         methods: {
-            onSelect(item) {
-                this.item = item
+            
+            personSelected(item) {
+                this.$data.person = item;
+                this.createPersonData();
             },
+
+            populateYears() {
+                let year = new Date().getFullYear();
+                let years = [];
+                for (var i = 1980; i != year; year--) years.push(`${year}`)
+                return years;
+            },
+            
     
             clearResults() {
                 this.$data.person = "";

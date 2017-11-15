@@ -19,8 +19,6 @@ app.use(requestLogger);
 app.use('/static', express.static('static'));
 app.use('/app', express.static('app'));
 
-
-//TODO: Fix this to properly use token
 const TOKEN = process.env.TOKEN;
 if (! TOKEN ) {
   throw new Error('ERROR: TOKEN not specified in env');
@@ -33,15 +31,15 @@ if (process.env.BYPASS_TOKEN !== 'true') {
 }
 
 app.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname + '/static/index.html'));
+  res.sendFile(path.join(__dirname + '/app/dist/index.html'));  
 });
 
 // app.get('/app', (req, res) => {
 // 	res.sendFile(path.join(__dirname + '/static/app/index.html'));
 // });
 
-app.get('/app', (req, res) => {
-  res.sendFile(path.join(__dirname + '/app/dist/index.html'));
+app.get('/api', (req, res) => {
+	res.sendFile(path.join(__dirname + '/static/index.html'));
 });
 
 app.get('/api/:year([0-9]{4})/:month([0-9]{2})/:word', (req, res) => {

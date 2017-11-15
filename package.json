@@ -26,6 +26,7 @@
     "@financial-times/s3o-middleware": "^2.0.4",
     "assert": "^1.4.1",
     "aws-sdk": "^2.7.10",
+    "chart.js": "^2.7.1",
     "debug": "^2.3.3",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
@@ -37,11 +38,11 @@
     "rss": "^1.2.1",
     "striptags": "^2.1.1",
     "uuid": "^3.0.1",
-    "xml2js": "^0.4.17",
-    "chart.js": "^2.7.1",
     "vue": "^2.4.4",
     "vue-chartjs": "^3.0.2",
-    "vue-select": "^2.3.0"
+    "vue-multiselect": "^2.0.6",
+    "vue-select": "^2.3.0",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -59,5 +60,4 @@
   "engines": {
     "node": "8.9.x"
   }
-  
 }

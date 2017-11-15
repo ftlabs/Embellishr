@@ -14,11 +14,6 @@ export default {
   components: {
     GraphView,
     NavHeader
-  },
-  data () {
-    return {
-      
-    }
   }
 }
 </script>
