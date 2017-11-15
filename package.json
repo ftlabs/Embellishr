@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "client-dev": "cross-env NODE_ENV=production webpack --watch --progress --hide-modules",
-    "client-prod": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "client-prod": "cross-env NODE_ENV=production webpack --progress --hide-modules --optimize-minimize",
     "heroku-postbuild": "webpack --progress --hide-modules"
   },
   "repository": {
@@ -41,7 +41,6 @@
     "vue": "^2.4.4",
     "vue-chartjs": "^3.0.2",
     "vue-multiselect": "^2.0.6",
-    "vue-select": "^2.3.0",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {

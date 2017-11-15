@@ -9,23 +9,32 @@
                 <form>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Word</label>
-                        <input v-model="word" type="text" class="form-control" id="searchWord" placeholder="e.g. Europe">
-                        <label for="exampleFormControlInput1">Year</label>
-                        <select placeholder="Select year" v-model="year" data-size="10" class="form-control" >
-                            <option v-for="option in populateYears()" :value="option" :key="option">
+                        <input :disabled="searchCompleted" v-model="word" type="text" class="form-control" id="searchWord" placeholder="e.g. Europe">
+                        <label for="yearSelect">Year</label>
+                        <select :disabled="searchCompleted" placeholder="Select year" id="yearSelect" v-model="year" data-size="10" class="form-control" >
+                            <option v-for="option in yearList" :value="option" :key="option">
                                 {{ option }}
                             </option>
                         </select>
                     </div>
                 </form>
-                <button v-show="!searchCompleted" @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
+                <button :disabled="word == ''" v-show="!searchCompleted" @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
                 <button v-show="searchCompleted" @click="clearResults()" class="btn btn-info btn-sm">Reset</button>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="float-right" v-if="searchCompleted">
-                    <vue-select :on-change="personSelected" style="width:500px;" placeholder="Select a person" v-model="person" :options="peopleList"></vue-select>
+                    <multiselect style="width:500px;"
+                    @select="personSelected" 
+                    show-labels="true"
+                    v-model="person" 
+                    :options="peopleList" 
+                    :close-on-select="true" 
+                    :select-label="null"
+                    :deselect-label="null"
+                    :clear-on-select="false" 
+                    placeholder="Select one"></multiselect>
                     <small>Found <strong>{{peopleList.length}}</strong> people </small>
                 </div>
             </div>
@@ -44,7 +53,7 @@
 
 <script>
     import API from './store/API'
-    import VueSelect from 'vue-select'
+    import Multiselect from 'vue-multiselect'
     import DataChart from './components/DataChart'
     const api = new API();
     const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
@@ -54,12 +63,13 @@
     export default {
     
         components: {
-            VueSelect,
+            Multiselect,
             DataChart
         },
     
         data() {
             return {
+                yearList: [],
                 searchCompleted: false,
                 year: '',
                 word: '',
@@ -85,8 +95,8 @@
 
             populateYears() {
                 let year = new Date().getFullYear();
-                let years = [];
-                for (var i = 1980; i != year; year--) years.push(`${year}`)
+                for (var i = 1980; i != year; year--) this.$data.yearList.push(`${year}`)
+                this.$data.year = this.$data.yearList[0];
                 return years;
             },
             
@@ -95,11 +105,12 @@
                 this.$data.person = "";
                 this.$data.peopleMap = null;
                 this.$data.peopleList = [];
-                this.$data.year = "";
+                this.$data.year = this.$data.yearList[0];
                 this.$data.word = "";
                 this.$data.resultGraph = null;
                 //this.$data.personGraph = null;
                 this.$data.searchCompleted = false;
+
             },
     
             fetchResults() {
@@ -173,7 +184,5 @@
         }
     }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
-<style>
-    
-</style>
