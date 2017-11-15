@@ -1,7 +1,7 @@
 {
-  "name": "ftlabs-correlations",
+  "name": "ftlabs-embellishr",
   "version": "1.0.0",
-  "description": "It generates indexes of correlations between perople and orgs in the (FT) news",
+  "description": "App used for FT interal 'word of the year'.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
