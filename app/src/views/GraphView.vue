@@ -2,7 +2,7 @@
 <div>
         <div class="row text-center">
             <div class="col-md-5" style="margin: 0 auto;">
-                <form>
+                <form v-on:submit.prevent="fetchResults()">
                     <div class="form-group">
                         <label for="searchWord">Word</label>
                         <input v-model="word" type="text" class="form-control" id="searchWord" placeholder="e.g. Europe">
@@ -131,7 +131,15 @@
                     let months = response[this.$data.year].months;
                     let people = response[this.$data.year].people;
                     this.$data.peopleMap = people;
-                    this.$data.peopleList = Object.keys(people);
+
+                    //TODO: once datastructure finalized by team, perform sort in server
+                    this.$data.peopleList = Object.keys(people).sort((a,b) => {
+                        let firstTotal = people[a].reduce((sum, val) => sum + val, 0);
+                        let secondTotal = people[b].reduce((sum, val) => sum + val, 0);
+                        return secondTotal - firstTotal;
+                    })
+
+                    //this.$data.peopleList = Object.keys(people)
                     this.$data.people = [this.$data.peopleList[0]];
                     this.createResultData(months)
                     this.createPersonData();

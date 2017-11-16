@@ -87,6 +87,7 @@ function condensedSummary(word, year) {
                 }  
             }
         }
+        
         return summaryResponse;
     })
 }
