@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <NavHeader></NavHeader>
-    <GraphView></GraphView>
+    <div class="container">
+          <GraphView></GraphView>
+    </div>
   </div>
 </template>
 

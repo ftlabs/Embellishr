@@ -1,9 +1,5 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-            </div>
-        </div>
+<div>
         <div class="row text-center">
             <div class="col-md-5" style="margin: 0 auto;">
                 <form>
@@ -18,9 +14,9 @@
                             </select>
                     </div>
                 </form>
-                <button :disabled="word == ''" @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
                 <button v-show="searchCompleted" @click="clearResults()" class="btn btn-default btn-sm">Reset</button>
-                        <span v-if="loading">Loading...</span>
+                <button :disabled="word == ''" @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
+                <span v-if="loading">Loading...</span>
             </div>
         </div>
         <div class="row">
@@ -28,17 +24,19 @@
                 <div class="float-right" v-show="searchCompleted">
                     <multiselect 
                     style="width:500px;" 
-                    @select="personSelected" 
-                    v-model="person" 
+                    @select="personSelected"
+                    @remove="personRemoved" 
+                    v-model="people" 
+                    :max="3"
                     :options="peopleList" 
                     :close-on-select="true" 
                     :select-label="null"
                     :custom-label="renderLabel"
                     :deselect-label="null" 
-                    :clear-on-select="false" 
+                    :multiple="true"
                     placeholder="Select a person"></multiselect>
                     <p><small>Found <strong>{{peopleList.length}}</strong> people</small></p>
-                    <p><small>Click <strong>here</strong> to view articles associated with this person</small></p>
+                    <!-- <p><small>Click <strong>here</strong> to view articles associated with this person</small></p> -->
                 </div>
             </div>
         </div>
@@ -50,8 +48,7 @@
                 <data-chart ref="personGraph" :width="400" :height="200" :chart-data="personGraph"></data-chart>
             </div>
         </div>
-    
-    </div>
+</div>    
 </template>
 
 <script>
@@ -63,6 +60,11 @@
     const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
         "Sep", "Oct", "Nov", "Dec"
     ];
+    const colors = [
+        '0, 0, 255',
+        '255,128,0',
+        '102,0,204'
+    ]
     
     export default {
     
@@ -82,7 +84,7 @@
                 peopleList: [],
                 resultGraph: null,
                 personGraph: null,
-                person: ""
+                people: []
             }
         },
     
@@ -94,18 +96,22 @@
         methods: {
 
             renderLabel(item) {
-                let articleCount = this.$data.peopleMap[item].reduce((sum, val) => sum + val, 1);
+                let articleCount = this.$data.peopleMap[item].reduce((sum, val) => sum + val, 0);
                 return `${item} - (${articleCount})`
             },
     
             personSelected(item) {
-                this.$data.person = item;
+                this.$data.people.push(item);
+                this.createPersonData();
+            },
+
+            personRemoved(item) {
                 this.createPersonData();
             },
     
             populateYears() {
                 let year = new Date().getFullYear();
-                for (var i = 1980; i != year; year--) this.$data.yearList.push(`${year}`)
+                for (var i = 2004; i != year; year--) this.$data.yearList.push(`${year}`)
                 this.$data.year = this.$data.yearList[0];
             },
     
@@ -126,7 +132,7 @@
                     let people = response[this.$data.year].people;
                     this.$data.peopleMap = people;
                     this.$data.peopleList = Object.keys(people);
-                    this.$data.person = this.$data.peopleList[0];
+                    this.$data.people = [this.$data.peopleList[0]];
                     this.createResultData(months)
                     this.createPersonData();
     
@@ -138,17 +144,7 @@
             initGraphs() {
                 this.$data.personGraph = {
                     labels: labels,
-                    datasets: [{
-                        label: '',
-                        data: [],
-                        backgroundColor: [
-                            'rgba(0, 0, 255, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(0, 0, 255, 1)'
-                        ],
-                        borderWidth: 2
-                    }]
+                    datasets: []
                 }
     
                 this.$data.resultGraph = {
@@ -156,12 +152,8 @@
                     datasets: [{
                         label: "",
                         data: [],
-                        backgroundColor: [
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        backgroundColor: ['rgba(255, 159, 64, 0.2)'],
+                        borderColor: ['rgba(255, 159, 64, 1)'],
                         borderWidth: 2
                     }]
                 }
@@ -175,10 +167,18 @@
             },
     
             createPersonData() {
-                let personData = this.$data.peopleMap[this.$data.person];
-                let label = `Mentions of ${this.person} and "${this.word}" over ${this.year}`;
-                this.$set(this.$data.personGraph.datasets[0], "data", personData)
-                this.$set(this.$data.personGraph.datasets[0], "label", label)
+                const datasets = [];
+                for(let i = 0; i < this.$data.people.length; i++) {
+                    let person = this.$data.people[i];
+                    let dataset = {
+                        label: `Mentions of ${person} and "${this.word}" over ${this.year}`,
+                        data: this.$data.peopleMap[person],
+                        backgroundColor: [`rgba(${colors[i]}, 0.2`],
+                        borderColor: [`rgba(${colors[i]}, 1`]
+                    }
+                    datasets.push(dataset);
+                }
+                this.$set(this.$data.personGraph, "datasets", datasets)
                 this.$refs.personGraph.update();
             }
     
