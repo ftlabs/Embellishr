@@ -10,6 +10,7 @@ export default {
   mixins: [reactiveProp],
   methods: {
       update() {
+          console.log("called again update");
         this.$data._chart.update();
       }
 
