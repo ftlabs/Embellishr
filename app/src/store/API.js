@@ -8,7 +8,7 @@ export default class API {
         return fetch(url, {
             credentials: 'include'
         }).then(resp => resp.json())
-        history.pushState({}, word, `?word=${urlComponent}&year=${year}`)
+        ///history.pushState({}, word, `?word=${urlComponent}&year=${year}`)
     }
 
 }

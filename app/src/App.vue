@@ -2,19 +2,17 @@
   <div id="app">
     <NavHeader></NavHeader>
     <div class="container">
-          <GraphView></GraphView>
+          <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import NavHeader from './components/general/NavHeader'
-import GraphView from './views/GraphView'
 
 export default {
   name: 'app',
   components: {
-    GraphView,
     NavHeader
   }
 }

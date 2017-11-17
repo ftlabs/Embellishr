@@ -1,25 +1,14 @@
 <template>
 <div>
-        <div class="row text-center">
-            <div class="col-md-5" style="margin: 0 auto;">
-                <form v-on:submit.prevent="fetchResults()">
-                    <div class="form-group">
-                        <label for="searchWord">Word</label>
-                        <input v-model="word" type="text" class="form-control" id="searchWord" placeholder="e.g. Europe">
-                        <label for="yearSelect">Year</label>
-                        <select placeholder="Select year" id="yearSelect" v-model="year" data-size="10" class="form-control">
-                                <option v-for="option in yearList" :value="option" :key="option">
-                                    {{ option }}
-                                </option>
-                            </select>
-                    </div>
-                </form>
-                <button v-show="searchCompleted" @click="clearResults()" class="btn btn-default btn-sm">Reset</button>
-                <button :disabled="word == ''" @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
-                <span v-if="loading">Loading...</span>
+        <div class="row">
+            <div class="col-md-12">
+            <br>
+            <h3><strong>Word:</strong> {{this.word}}</h3>
+            <br>
+            <h3><strong>Year:</strong> {{this.year}}</h3>
             </div>
         </div>
-        <div class="row" v-show="searchCompleted">
+        <div class="row" >
             <div class="col-md-6 well">
                 <result-chart></result-chart>
             </div>
@@ -27,7 +16,6 @@
             <people-chart></people-chart>
             </div>
         </div>
-       
 </div>    
 </template>
 
@@ -36,7 +24,11 @@
     import { mapState, mapGetters } from 'vuex'
     import PeopleChart from '../components/GraphView/PeopleChart'
     import ResultChart from '../components/GraphView/ResultsChart'
-    
+    const words = ["Europe", "Brexit", "Bitcoin"]
+    const dates = [2017, 2016, 2015];
+    let position = 0;
+    const TIMEOUT = 7000;
+
     export default {
     
         components: {
@@ -63,29 +55,46 @@
                 searchCompleted: false,
                 word: '',
                 year: '',
+                wordYearDataset: []
             }
         },
 
         mounted() {
             this.populateYears();
+            setInterval(this.rotateData, TIMEOUT);
+            this.rotateData();
+            console.log(this.$route.query);
         },
     
         methods: {
+
+            extractData() {
+                const data = this.$route.data;
+                let wordYearPairs = data.split(',');
+                for(pair in wordYearPairs) {
+                    let word, year;
+                    [word, year] = pair.split(':');
+                    this.$data.wordYearDataset.push({
+                        word,
+                        year
+                    })
+                }
+            },
+            
+            rotateData() {
+                this.word = words[position];
+                this.year = dates[position];
+                position++;
+                if (position > 2) position = 0;
+                this.fetchResults();
+            },
+
             populateYears() {
                 let year = new Date().getFullYear();
                 for (var i = 2004; i != year; year--) this.$data.yearList.push(`${year}`)
                 this.$data.year = this.$data.yearList[0];
             },
     
-            clearResults() {
-                this.$data.person = "";
-                this.$data.peopleMap = null;
-                this.$data.peopleList = [];
-                this.$data.year = this.$data.yearList[0]; //set the year to first in select box
-                this.$data.word = "";
-                this.$data.searchCompleted = false;
-            },
-
             fetchResults() {
                 this.$data.loading = true;
                 this.$store.commit('updateSearchParams', {word: this.word, year: this.year});

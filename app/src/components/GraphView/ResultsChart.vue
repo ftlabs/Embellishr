@@ -17,7 +17,7 @@
     export default {
 
         mounted() {
-            this.initGraphs();
+            this.initGraph();
         },
 
         components: {
@@ -50,7 +50,7 @@
             },
 
 
-            initGraphs() {    
+            initGraph() {    
                 this.$data.resultGraph = {
                     labels: labels,
                     datasets: [{
@@ -77,6 +77,6 @@
 
 <style>
 .results-chart {
-    margin-top: 110px;
+    margin-top: 75px;
 } 
 </style>

@@ -19,7 +19,7 @@ const getters = {
 
 const mutations = {
     updateSavedData (state, data) {
-        state.responseData = data
+          state.responseData = data
       },
     updateSearchParams (state, data) {
           state.word = data.word;
@@ -32,7 +32,7 @@ const actions = {
         api.getYearResults(this.state.word, this.state.year).then((response) => {
             commit('updateSavedData', response)
         }, () => {
-            console.log('error')
+            console.log('Error fetching data')
         })
         }
 }

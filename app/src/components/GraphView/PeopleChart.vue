@@ -5,7 +5,6 @@
             <multiselect style="width:500px;" @select="personSelected" @remove="personRemoved" v-model="this.selectedPeople" :max="3" :options="this.peopleList" :close-on-select="true" :select-label="null" :custom-label="renderLabel" :deselect-label="null" :multiple="true"
                 placeholder="Select a person"></multiselect>
             <p><small>Found <strong>{{peopleList.length}}</strong> people</small></p>
-            <p><small>Click <strong>here</strong> to view articles associated with this person</small></p>
         </div>
 </div>
 <div>

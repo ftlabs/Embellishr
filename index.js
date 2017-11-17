@@ -30,14 +30,6 @@ if (process.env.BYPASS_TOKEN !== 'true') {
     app.use(validateRequest);
 }
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/app/dist/index.html'));  
-});
-
-// app.get('/app', (req, res) => {
-// 	res.sendFile(path.join(__dirname + '/static/app/index.html'));
-// });
-
 app.get('/api', (req, res) => {
 	res.sendFile(path.join(__dirname + '/static/index.html'));
 });
@@ -85,6 +77,11 @@ app.get('/api/condensed/:year([0-9]{4})/:word', (req, res) => {
     response[year] = results;
     res.json(response);    
   })  
+});
+
+app.get('/*', (req, res) => {
+  console.log("HITTING THIS")
+  res.sendFile(path.join(__dirname + '/app/dist/index.html'));  
 });
 
 

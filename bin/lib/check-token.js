@@ -6,10 +6,16 @@ const S3OAPI = require('@financial-times/s3o-middleware').authS3ONoRedirect;
 module.exports = (req, res, next) => {
 
 	const passedToken = req.headers.token;
+	const allowedIps = 'ALLOWED_IPS' in process.env ? process.env.ALLOWED_IPS.split(',') : ['127.0.0.1', '::1'];
+	const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
 	debug(`Checking if token is valid`);
 
-	if(passedToken === undefined){
+	if (allowedIps.indexOf(clientIp) !== -1) {
+		debug(`Allowing bypass via IP`);
+		next();
+	}
+	else if(passedToken === undefined){
 		debug(`No token has been passed to service. Falling through to S3O`);
 		if(req.originalUrl.includes('api')) {
 			S3OAPI(req, res, next);
