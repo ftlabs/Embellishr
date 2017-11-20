@@ -2,10 +2,8 @@
 <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-            <br>
-            <h1 class="display-2"><strong>Word:</strong> {{this.word}}</h1>
-            <br>
-            <h1 class="display-2"><strong>Year:</strong> {{this.year}}</h1>
+                <br>
+            <h1 class="display-4">{{this.word}} - {{this.year}}</h1>
             </div>
         </div>
         <div class="row">
@@ -108,6 +106,6 @@
 </script>
 <style>
     .facetChart {
-        margin-top: 25px;
+        margin-top: 30px;
     }
 </style>
