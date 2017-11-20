@@ -3,18 +3,21 @@
         <div class="row">
             <div class="col-md-12">
             <br>
-            <h3><strong>Word:</strong> {{this.word}}</h3>
+            <h1><strong>Word:</strong> {{this.word}}</h1>
             <br>
-            <h3><strong>Year:</strong> {{this.year}}</h3>
+            <h1><strong>Year:</strong> {{this.year}}</h1>
             </div>
         </div>
         <div class="row" >
-            <div class="col-md-6 well">
+            <div class="col-md-12">
                 <result-chart></result-chart>
             </div>
-            <div class="col-md-6 well">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <facet-chart :kiosk="true" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
+        </div>
         </div>
 </div>    
 </template>
@@ -105,4 +108,3 @@
         }
     }
 </script>
-
