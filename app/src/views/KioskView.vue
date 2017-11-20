@@ -11,10 +11,10 @@
                 <result-chart :kiosk="true"></result-chart>
             </div>
             <div class="col-lg-6 facetChart">
-                <facet-chart :kiosk="true" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+                <facet-chart :kiosk="true" :facetData.sync="this.$data.facetData" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
-        <h5 class="text-center">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h5>
+        <h3 class="text-center">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h5>
         </div>
 </div>    
 </template>
@@ -46,7 +46,22 @@
             responseData (newer, old) {
                 this.$data.searchCompleted = true;
                 this.$data.loading = false;
-                this.$data.people = newer[this.year].people;
+                let facetData;
+                switch(this.facetType) {
+                    case "people":
+                        facetData = newer[this.year].people;
+                        break;
+                    case "organisations":
+                        facetData = newer[this.year].organisations;
+                        break;
+                    case "topics":
+                        facetData = newer[this.year].topics;
+                        break;
+                    default:
+                        facetData = newer[this.year].people;
+                        break;
+                }
+                this.$data.facetData = facetData;
             }
         },
 
@@ -57,8 +72,9 @@
                 searchCompleted: false,
                 word: '',
                 year: '',
+                facetType: '',
                 wordYearDataset: [],
-                people: [],
+                facetData: [],
                 interval: 5000
             }
         },
@@ -79,9 +95,9 @@
                 const data = this.$route.query.data;
                 let wordYearPairs = data.split(',');
                 for(let pair of wordYearPairs) {
-                    let word, year;
-                    [word, year] = pair.split(':');
-                    this.$data.wordYearDataset.push({word, year})
+                    let word, year, type;
+                    [word, year, type] = pair.split(':');
+                    this.$data.wordYearDataset.push({word, year, type})
                 }
                 this.rotateData();
                 this.interval = setInterval(this.rotateData, this.$data.interval);
@@ -91,8 +107,8 @@
                 if (position >= this.$data.wordYearDataset.length) position = 0;
                 this.word = this.$data.wordYearDataset[position].word;
                 this.year = this.$data.wordYearDataset[position].year;
+                this.facetType = this.$data.wordYearDataset[position].type;
                 position++;
-                console.log(position);
                 this.fetchResults();
             },
     
