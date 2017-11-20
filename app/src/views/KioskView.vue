@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <br>
-            <h1 class="display-4">"{{this.word}}" - <em>{{this.year}}</em> </h1>
+            <h1 class="display-4"><strong style="color:#566c73">Word of the year:</strong> "{{this.word}}" - <em>{{this.year}}</em> </h1>
             </div>
         </div>
         <div class="row">
@@ -14,6 +14,7 @@
                 <facet-chart :kiosk="true" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
+        <h5 class="text-center">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h5>
         </div>
 </div>    
 </template>

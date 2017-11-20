@@ -38,8 +38,7 @@
             <h4 class="text-center">Topics</h4>
             <facet-chart :kiosk="false" :facetData.sync="this.$data.topics" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
-        </div>
-       
+        </div>       
 </div>    
 </template>
 
