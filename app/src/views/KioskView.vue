@@ -8,11 +8,11 @@
             <h1 class="display-2"><strong>Year:</strong> {{this.year}}</h1>
             </div>
         </div>
-        <div class="row" >
+        <div class="row">
             <div class="col-lg-6">
                 <result-chart :kiosk="true"></result-chart>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 facetChart">
                 <facet-chart :kiosk="true" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
@@ -106,6 +106,8 @@
         }
     }
 </script>
-<<style>
-    
+<style>
+    .facetChart {
+        margin-top: 25px;
+    }
 </style>
