@@ -37,7 +37,8 @@
         props: [
             'word',
             'year',
-            'facetData'
+            'facetData',
+            'kiosk'
         ],
 
         data() {
@@ -70,7 +71,8 @@
                     let secondTotal = facets[b].reduce((sum, val) => sum + val, 0);
                     return secondTotal - firstTotal;
                 })
-                this.$data.selectedFacets = [this.$data.facetList[0]];
+                let initialFacets = this.kiosk ? 3 : 1;
+                this.$data.selectedFacets = this.$data.facetList.slice(0, initialFacets);
                 this.createPersonData();
             },
     

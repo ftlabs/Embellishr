@@ -26,13 +26,13 @@
             </div>
             <div class="col-md-6">
             <h4 class="text-center">People</h4>
-            <facet-chart :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            <facet-chart :kiosk="false" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
         <div class="row" v-show="searchCompleted">
             <div class="col-md-6">
             <h4 class="text-center">Organisations</h4>
-            <facet-chart :facetData.sync="this.$data.organisations" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            <facet-chart :kiosk="false" :facetData.sync="this.$data.organisations" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
        

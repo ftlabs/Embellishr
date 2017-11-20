@@ -13,7 +13,7 @@
                 <result-chart></result-chart>
             </div>
             <div class="col-md-6 well">
-                <facet-chart :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+                <facet-chart :kiosk="true" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
 </div>    
