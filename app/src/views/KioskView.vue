@@ -9,12 +9,10 @@
             </div>
         </div>
         <div class="row" >
-            <div class="col-md-6">
-                <h4 class="text-center">Mentions</h4>
+            <div class="col-md-6 well">
                 <result-chart></result-chart>
             </div>
-            <div class="col-md-6">
-                 <h4 class="text-center">People</h4>
+            <div class="col-md-6 well">
                 <facet-chart :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
@@ -70,12 +68,13 @@
         },
     
         methods: {
+
             extractData() {
                 if(!this.$route.query.hasOwnProperty('data')) {
                     return;
                 }
                 if(this.$route.query.hasOwnProperty('interval')) {
-                    this.$data.interval = this.$route.query.interval;
+                    this.$data.interval = this.$route.query.interval * 1000;
                 }
                 const data = this.$route.query.data;
                 let wordYearPairs = data.split(',');

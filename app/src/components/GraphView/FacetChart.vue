@@ -50,12 +50,6 @@
         },
     
         watch: {
-            // word(newer, old) {
-            //     this.updateData();
-            // },
-            // year(newer, old) {
-            //     this.updateData();
-            // },
             facetData(newer, old) {
                 this.updateData();
             }
@@ -63,7 +57,6 @@
     
         created() {
             this.initGraph();
-            console.log("IS CREATED");
         },
     
         methods: {
@@ -71,7 +64,6 @@
             updateData() {
                 let facets = this.facetData;
                 this.$data.facetMap = facets;
-                console.log(facets);
                 //TODO: once datastructure finalized by team, perform sort in server
                 this.$data.facetList = Object.keys(facets).sort((a, b) => {
                     let firstTotal = facets[a].reduce((sum, val) => sum + val, 0);

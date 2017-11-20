@@ -63,7 +63,6 @@
                 this.$data.loading = false;     
                 this.$data.organisations = newer[this.year].organisations;
                 this.$data.people = newer[this.year].people;
-
             }
         },
 
@@ -79,11 +78,30 @@
             }
         },
 
+        // beforeRouteUpdate (to, from, next) {
+        //     this.extractData();
+        //     next();
+        // },
+
         mounted() {
             this.populateYears();
+            this.extractData();
         },
     
         methods: {
+
+            extractData(to=null) {
+                if(!this.$route.query.hasOwnProperty('data')) {
+                    return;
+                }
+                const data = this.$route.query.data;
+                let word, year;
+                [word, year] = data.split(':');
+                this.$data.word = word;
+                this.$data.year = year;
+                this.fetchResults();
+            },
+
             populateYears() {
                 let year = new Date().getFullYear();
                 for (var i = 2004; i != year; year--) this.$data.yearList.push(`${year}`)
@@ -103,6 +121,9 @@
                 this.$data.loading = true;
                 this.$store.commit('updateSearchParams', {word: this.word, year: this.year});
                 this.$store.dispatch('FETCH_DATA')
+                let dataString = `${this.$data.word}:${this.$data.year}`;
+                let routeData = {query: { data: dataString }};
+                this.$router.replace(routeData);
             },        
 
         }
