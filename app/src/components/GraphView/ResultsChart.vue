@@ -1,6 +1,6 @@
 <template>
 <div>
-    <data-chart class="results-chart" ref="resultsGraph" :width="400" :height="200" :chart-data="resultGraph"></data-chart>
+    <data-chart :kiosk="this.kiosk" class="results-chart" ref="resultsGraph" :width="400" :height="this.kiosk ? 300 : 200" :chart-data="resultGraph"></data-chart>
 </div>
 </template>
 
@@ -15,6 +15,10 @@
     
 
     export default {
+
+        props: [
+            'kiosk'
+        ],
 
         mounted() {
             this.initGraph();

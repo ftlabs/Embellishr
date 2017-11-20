@@ -6,16 +6,26 @@ const { reactiveProp } = mixins
 
 export default {
   extends: Line,
-  props: [],
+  props: [
+      'kiosk'
+  ],
   mixins: [reactiveProp],
   methods: {
       update() {
         this.$data._chart.update();
+      },
+
+      getOptions() {
+          
       }
 
   },
   mounted () {
     const options = {
+      legend: {
+          labels: {}
+      },
+      responsive: true,
       scales: {
          yAxes: [{
              ticks: {
@@ -28,8 +38,20 @@ export default {
                  },
              }
          }],
+         xAxes: [{
+             ticks: {
+
+             }
+         }]
      }
     }
+    
+    if(this.kiosk) {
+        options.scales.yAxes[0].ticks.fontSize=20;
+        options.scales.xAxes[0].ticks.fontSize=20;
+        options.legend.labels.fontSize = 20;
+    }
+
     this.renderChart(this.chartData, options)
   }
 }

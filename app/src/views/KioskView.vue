@@ -1,20 +1,18 @@
 <template>
-<div>
+<div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
             <br>
-            <h1><strong>Word:</strong> {{this.word}}</h1>
+            <h1 class="display-2"><strong>Word:</strong> {{this.word}}</h1>
             <br>
-            <h1><strong>Year:</strong> {{this.year}}</h1>
+            <h1 class="display-2"><strong>Year:</strong> {{this.year}}</h1>
             </div>
         </div>
         <div class="row" >
-            <div class="col-md-12">
-                <result-chart></result-chart>
+            <div class="col-lg-6">
+                <result-chart :kiosk="true"></result-chart>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-6">
                 <facet-chart :kiosk="true" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
@@ -108,3 +106,6 @@
         }
     }
 </script>
+<<style>
+    
+</style>

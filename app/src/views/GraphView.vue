@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
         <div class="row text-center">
             <div class="col-md-5" style="margin: 0 auto;">
                 <form v-on:submit.prevent="fetchResults()">

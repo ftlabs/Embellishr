@@ -2,13 +2,20 @@
 <div>
 <div>
 <div class="float-right">
+    <div v-if="!this.kiosk">
             <multiselect style="width:500px;" @select="facetSelected" @remove="facetRemoved" v-model="this.selectedFacets" :max="3" :options="this.facetList" :close-on-select="true" :select-label="null" :custom-label="renderLabel" :deselect-label="null" :multiple="true"
                 placeholder="Select an entity"></multiselect>
             <p><small>Found <strong>{{facetList.length}}</strong> results</small></p>
-        </div>
+    </div>
+    <div v-if="this.kiosk">
+        <h1 class="text-center">
+            <span v-for="facet in this.selectedFacets" :key="facet" class="badge badge-pill badge-primary">{{facet}}</span>&nbsp;&nbsp;
+        </h1>
+    </div>
+</div>
 </div>
 <div>
-    <data-chart ref="facetGraph" :width="400" :height="200" :chart-data="facetGraph"></data-chart>
+    <data-chart :kiosk="this.kiosk" ref="facetGraph" :width="400" :height="this.kiosk ? 300 : 200" :chart-data="facetGraph"></data-chart>
 </div>
 </div>
 </template>
