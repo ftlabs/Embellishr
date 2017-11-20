@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <br>
-            <h1 class="display-4">{{this.word}} - {{this.year}}</h1>
+            <h1 class="display-4">"{{this.word}}" - <em>{{this.year}}</em> </h1>
             </div>
         </div>
         <div class="row">
