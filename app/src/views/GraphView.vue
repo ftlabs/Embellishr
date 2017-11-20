@@ -20,11 +20,19 @@
             </div>
         </div>
         <div class="row" v-show="searchCompleted">
-            <div class="col-md-6 well">
+            <div class="col-md-6">
+                <h4 class="text-center">Mentions</h4>
                 <result-chart></result-chart>
             </div>
-            <div class="col-md-6 well">
-            <people-chart></people-chart>
+            <div class="col-md-6">
+            <h4 class="text-center">People</h4>
+            <facet-chart :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            </div>
+        </div>
+        <div class="row" v-show="searchCompleted">
+            <div class="col-md-6">
+            <h4 class="text-center">Organisations</h4>
+            <facet-chart :facetData.sync="this.$data.organisations" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
        
@@ -34,15 +42,15 @@
 <script>
     import Multiselect from 'vue-multiselect'
     import { mapState, mapGetters } from 'vuex'
-    import PeopleChart from '../components/GraphView/PeopleChart'
     import ResultChart from '../components/GraphView/ResultsChart'
+    import FacetChart from '../components/GraphView/FacetChart'
     
     export default {
     
         components: {
             Multiselect,
-            PeopleChart,
-            ResultChart
+            ResultChart,
+            FacetChart
         },
 
         computed: mapGetters({
@@ -52,7 +60,10 @@
         watch: {
             responseData (newer, old) {
                 this.$data.searchCompleted = true;
-                this.$data.loading = false;
+                this.$data.loading = false;     
+                this.$data.organisations = newer[this.year].organisations;
+                this.$data.people = newer[this.year].people;
+
             }
         },
 
@@ -63,6 +74,8 @@
                 searchCompleted: false,
                 word: '',
                 year: '',
+                organisations: [],
+                people: [],
             }
         },
 

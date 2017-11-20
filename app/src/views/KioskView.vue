@@ -9,11 +9,13 @@
             </div>
         </div>
         <div class="row" >
-            <div class="col-md-6 well">
+            <div class="col-md-6">
+                <h4 class="text-center">Mentions</h4>
                 <result-chart></result-chart>
             </div>
-            <div class="col-md-6 well">
-                <people-chart></people-chart>
+            <div class="col-md-6">
+                 <h4 class="text-center">People</h4>
+                <facet-chart :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
 </div>    
@@ -22,7 +24,7 @@
 <script>
     import Multiselect from 'vue-multiselect'
     import { mapState, mapGetters } from 'vuex'
-    import PeopleChart from '../components/GraphView/PeopleChart'
+    import FacetChart from '../components/GraphView/FacetChart'
     import ResultChart from '../components/GraphView/ResultsChart'
     let position = 0;
 
@@ -30,8 +32,8 @@
     
         components: {
             Multiselect,
-            PeopleChart,
-            ResultChart
+            ResultChart,
+            FacetChart
         },
 
         computed: mapGetters({
@@ -46,6 +48,7 @@
             responseData (newer, old) {
                 this.$data.searchCompleted = true;
                 this.$data.loading = false;
+                this.$data.people = newer[this.year].people;
             }
         },
 
@@ -57,6 +60,7 @@
                 word: '',
                 year: '',
                 wordYearDataset: [],
+                people: [],
                 interval: 5000
             }
         },
@@ -66,7 +70,6 @@
         },
     
         methods: {
-
             extractData() {
                 if(!this.$route.query.hasOwnProperty('data')) {
                     return;
@@ -79,10 +82,7 @@
                 for(let pair of wordYearPairs) {
                     let word, year;
                     [word, year] = pair.split(':');
-                    this.$data.wordYearDataset.push({
-                        word,
-                        year
-                    })
+                    this.$data.wordYearDataset.push({word, year})
                 }
                 this.rotateData();
                 this.interval = setInterval(this.rotateData, this.$data.interval);

@@ -62,7 +62,7 @@ function constructSAPIQuery( params ) {
 		     offset : 0,
 			aspects : [ "title",  "lifecycle", "location"], // [ "title", "location", "summary", "lifecycle", "metadata"],
 		constraints : [],
-		facets: {"names":[ "people"], "maxElements":-1}
+		facets: {"names":[ "people", "organisations", "topics"], "maxElements":-1}
 	};
 	const combined = Object.assign({}, defaults, params);
 	//console.log(combined)

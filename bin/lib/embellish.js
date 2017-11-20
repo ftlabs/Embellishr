@@ -64,7 +64,8 @@ function yearSummary(word, year) {
 function condensedSummary(word, year) {
     let summaryResponse = {
         months: [],
-        people: {}
+        people: {},
+        organisations: {}
     }
     return _fetchYear(word, year).then(responses => {
         for(let response of responses) {
@@ -77,14 +78,29 @@ function condensedSummary(word, year) {
             summaryResponse.months.push(indexCount);              
             if(facets) {
                 let people = facets.filter(obj => obj.name === 'people').pop() 
-                for(let person of people.facetElements) {
-                    if(!(person.name in summaryResponse.people)) {
-                        summaryResponse.people[person.name] = new Array(12).fill(0);
+                let organisations = facets.filter(obj => obj.name === 'organisations').pop();
+
+                if(people) {
+                    for(let person of people.facetElements) {
+                        if(!(person.name in summaryResponse.people)) {
+                            summaryResponse.people[person.name] = new Array(12).fill(0);
+                        }
+                        let month = new Date(response.params.month).getMonth();
+                        if(person.count != null)
+                        summaryResponse.people[person.name][month] = person.count;
+                    }  
+                }
+
+                if(organisations) {
+                    for(let organisation of organisations.facetElements) {
+                        if(!(organisation.name in summaryResponse.organisations)) {
+                            summaryResponse.organisations[organisation.name] = new Array(12).fill(0);
+                        }
+                        let month = new Date(response.params.month).getMonth();
+                        if(organisation.count != null)
+                        summaryResponse.organisations[organisation.name][month] = organisation.count;
                     }
-                    let month = new Date(response.params.month).getMonth();
-                    if(person.count != null)
-                    summaryResponse.people[person.name][month] = person.count;
-                }  
+                }
             }
         }
         
