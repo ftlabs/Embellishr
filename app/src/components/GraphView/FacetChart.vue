@@ -2,8 +2,8 @@
 <div>
 <div>
 <div class="float-right">
-            <multiselect style="width:500px;" @select="personSelected" @remove="personRemoved" v-model="this.selectedFacets" :max="3" :options="this.facetList" :close-on-select="true" :select-label="null" :custom-label="renderLabel" :deselect-label="null" :multiple="true"
-                placeholder="Select a person"></multiselect>
+            <multiselect style="width:500px;" @select="facetSelected" @remove="facetRemoved" v-model="this.selectedFacets" :max="3" :options="this.facetList" :close-on-select="true" :select-label="null" :custom-label="renderLabel" :deselect-label="null" :multiple="true"
+                placeholder="Select an entity"></multiselect>
             <p><small>Found <strong>{{facetList.length}}</strong> results</small></p>
         </div>
 </div>
@@ -81,12 +81,12 @@
                 return `${item} - (${articleCount})`
             },
     
-            personSelected(item) {
+            facetSelected(item) {
                 this.$data.selectedFacets.push(item);
                 this.createPersonData();
             },
     
-            personRemoved(removed) {
+            facetRemoved(removed) {
                 this.$data.selectedFacets = this.$data.selectedFacets.filter(item => item !== removed)
                 this.createPersonData();
             },
@@ -120,5 +120,4 @@
     
     }
 </script>
-
 <style src="vue-multiselect/dist/vue-multiselect.min.css">

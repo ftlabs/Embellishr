@@ -65,6 +65,7 @@ function condensedSummary(word, year) {
     let summaryResponse = {
         months: [],
         people: {},
+        topics: {},
         organisations: {}
     }
     return _fetchYear(word, year).then(responses => {
@@ -79,6 +80,8 @@ function condensedSummary(word, year) {
             if(facets) {
                 let people = facets.filter(obj => obj.name === 'people').pop() 
                 let organisations = facets.filter(obj => obj.name === 'organisations').pop();
+                let topics = facets.filter(obj => obj.name === 'topics').pop();
+                
 
                 if(people) {
                     for(let person of people.facetElements) {
@@ -99,6 +102,17 @@ function condensedSummary(word, year) {
                         let month = new Date(response.params.month).getMonth();
                         if(organisation.count != null)
                         summaryResponse.organisations[organisation.name][month] = organisation.count;
+                    }
+                }
+
+                if(topics) {
+                    for(let topic of topics.facetElements) {
+                        if(!(topic.name in summaryResponse.topics)) {
+                            summaryResponse.topics[topic.name] = new Array(12).fill(0);
+                        }
+                        let month = new Date(response.params.month).getMonth();
+                        if(topic.count != null)
+                        summaryResponse.topics[topic.name][month] = topic.count;
                     }
                 }
             }

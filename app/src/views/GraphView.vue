@@ -34,6 +34,10 @@
             <h4 class="text-center">Organisations</h4>
             <facet-chart :kiosk="false" :facetData.sync="this.$data.organisations" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
+            <div class="col-md-6">
+            <h4 class="text-center">Topics</h4>
+            <facet-chart :kiosk="false" :facetData.sync="this.$data.topics" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            </div>
         </div>
        
 </div>    
@@ -63,6 +67,7 @@
                 this.$data.loading = false;     
                 this.$data.organisations = newer[this.year].organisations;
                 this.$data.people = newer[this.year].people;
+                this.$data.topics = newer[this.year].topics;
             }
         },
 
@@ -75,6 +80,7 @@
                 year: '',
                 organisations: [],
                 people: [],
+                topics: []
             }
         },
 
@@ -90,7 +96,7 @@
     
         methods: {
 
-            extractData(to=null) {
+            extractData() {
                 if(!this.$route.query.hasOwnProperty('data')) {
                     return;
                 }
