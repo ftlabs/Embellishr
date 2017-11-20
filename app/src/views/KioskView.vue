@@ -13,7 +13,7 @@
                 <result-chart></result-chart>
             </div>
             <div class="col-md-6 well">
-            <people-chart></people-chart>
+                <people-chart></people-chart>
             </div>
         </div>
 </div>    
@@ -24,10 +24,7 @@
     import { mapState, mapGetters } from 'vuex'
     import PeopleChart from '../components/GraphView/PeopleChart'
     import ResultChart from '../components/GraphView/ResultsChart'
-    const words = ["Europe", "Brexit", "Bitcoin"]
-    const dates = [2017, 2016, 2015];
     let position = 0;
-    const TIMEOUT = 7000;
 
     export default {
     
@@ -40,6 +37,10 @@
         computed: mapGetters({
             responseData: 'getResults'
         }),
+
+         beforeDestroy() {
+            clearInterval(this.interval);
+         },
 
         watch: {
             responseData (newer, old) {
@@ -55,23 +56,27 @@
                 searchCompleted: false,
                 word: '',
                 year: '',
-                wordYearDataset: []
+                wordYearDataset: [],
+                interval: 5000
             }
         },
 
         mounted() {
-            this.populateYears();
-            setInterval(this.rotateData, TIMEOUT);
-            this.rotateData();
-            console.log(this.$route.query);
+            this.extractData();
         },
     
         methods: {
 
             extractData() {
-                const data = this.$route.data;
+                if(!this.$route.query.hasOwnProperty('data')) {
+                    return;
+                }
+                if(this.$route.query.hasOwnProperty('interval')) {
+                    this.$data.interval = this.$route.query.interval;
+                }
+                const data = this.$route.query.data;
                 let wordYearPairs = data.split(',');
-                for(pair in wordYearPairs) {
+                for(let pair of wordYearPairs) {
                     let word, year;
                     [word, year] = pair.split(':');
                     this.$data.wordYearDataset.push({
@@ -79,20 +84,17 @@
                         year
                     })
                 }
+                this.rotateData();
+                this.interval = setInterval(this.rotateData, this.$data.interval);
             },
             
             rotateData() {
-                this.word = words[position];
-                this.year = dates[position];
+                if (position >= this.$data.wordYearDataset.length) position = 0;
+                this.word = this.$data.wordYearDataset[position].word;
+                this.year = this.$data.wordYearDataset[position].year;
                 position++;
-                if (position > 2) position = 0;
+                console.log(position);
                 this.fetchResults();
-            },
-
-            populateYears() {
-                let year = new Date().getFullYear();
-                for (var i = 2004; i != year; year--) this.$data.yearList.push(`${year}`)
-                this.$data.year = this.$data.yearList[0];
             },
     
             fetchResults() {

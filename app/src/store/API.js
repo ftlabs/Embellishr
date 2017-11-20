@@ -6,7 +6,7 @@ export default class API {
         let urlComponent = encodeURIComponent(word);
         let url = `${BASE_URL}/condensed/${year}/${urlComponent}`;
         return fetch(url, {
-            credentials: 'include'
+            credentials: 'include',
         }).then(resp => resp.json())
         ///history.pushState({}, word, `?word=${urlComponent}&year=${year}`)
     }

@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
 	const allowedIps = 'ALLOWED_IPS' in process.env ? process.env.ALLOWED_IPS.split(',') : ['127.0.0.1', '::1'];
 	const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-	debug(`Checking if token is valid`);
+	debug(`Authenticating user...`);
 
 	if (allowedIps.indexOf(clientIp) !== -1) {
 		debug(`Allowing bypass via IP`);

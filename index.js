@@ -8,6 +8,8 @@ const embelish = require('./bin/lib/embellish');
 const v1v2 = require('./bin/lib/v1v2');
 const validateRequest = require('./bin/lib/check-token');
 
+const API_CACHE_TIME = 3600 // 1 Hour;
+
 var requestLogger = function(req, res, next) {
     debug("RECEIVED REQUEST:", req.method, req.url);
     next(); // Passing the request to the next handler in the stack.
@@ -72,16 +74,17 @@ app.get('/api/condensed/:year([0-9]{4})/:word', (req, res) => {
   const year = parseInt(req.params.year);
   const word = req.params.word;
   embelish.condensedSummary(word, year).then(results => {
+    console.log("CALLED THE CONDENSED API CALL");
     let response = {};
     response['searchTerm'] = word;
     response[year] = results;
+    res.setHeader('Cache-Control', `private, max-age=${API_CACHE_TIME}`)    
     res.json(response);    
   })  
 });
 
 app.get('/*', (req, res) => {
-  console.log("HITTING THIS")
-  res.sendFile(path.join(__dirname + '/app/dist/index.html'));  
+    res.sendFile(path.join(__dirname + '/app/dist/index.html'));  
 });
 
 
