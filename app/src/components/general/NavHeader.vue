@@ -1,21 +1,33 @@
 <template>
-          <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand" href="#"><h2><strong>FT Labs</strong> - Embellishr</h2></a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                       <router-link class="nav-link" to="/">Home</router-link>
-                    </li>
-                    <li class="nav-item">
-                       <router-link class="nav-link" to="/kiosk">Kiosk</router-link>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/api">API Docs</a>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
+  <header class="o-header-services" data-o-component="o-header">
+	<div class="o-header-services__top o-header-services__container">
+		<div class="o-header-services__hamburger">
+			<a class="o-header-services__hamburger-icon" href="#o-header-drawer" aria-controls="o-header-drawer"><span class="o-header__visually-hidden">Menu</span></a>
+		</div>
+		<div class="o-header-services__ftlogo"></div>
+		<div class="o-header-services__title">
+			<h1 class="o-header-services__product-name"><a href="/">FTLabs</a></h1><span class="o-header-subrand__product-tagline">Embellishr</span>
+		</div>
+		<div class="o-header-services__related-content">
+			<a class="o-header-services__related-content-link" href="#">Help</a>
+		</div>
+	</div>
+	<div class="o-header-services__primary-nav">
+		<div class="o-header-services__container">
+			<ul class="o-header-services__nav-list">
+				<li class="o-header-services__nav-item">
+						<router-link class="o-header-services__nav-link" to="/">Home</router-link>
+				</li>
+				<li class="o-header-services__nav-item">
+					<router-link class="o-header-services__nav-link" to="/kiosk">Kiosk</router-link>
+				</li>
+				<li class="o-header-services__nav-item">
+					<a class="o-header-services__nav-link" href="/api">
+						API Docs
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</header>
 </template>

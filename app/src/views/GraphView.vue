@@ -1,41 +1,49 @@
 <template>
-<div class="container">
-        <div class="row text-center">
-            <div class="col-md-5" style="margin: 0 auto;">
-                <form v-on:submit.prevent="fetchResults()">
+<div class="o-grid-container">
+	    <div class="o-grid-row">
+            <div data-o-grid-colspan="12" style="margin: 0 auto;">
+                <form class="o-forms" v-on:submit.prevent="fetchResults()">
                     <div class="form-group">
-                        <label for="searchWord">Word</label>
-                        <input v-model="word" type="text" class="form-control" id="searchWord" placeholder="e.g. Europe">
-                        <label for="yearSelect">Year</label>
-                        <select placeholder="Select year" id="yearSelect" v-model="year" data-size="10" class="form-control">
+                        <br>
+                        <label class="o-forms__label" for="searchWord">Word</label>
+                        <input v-model="word" type="text" class="o-forms__text" id="searchWord" placeholder="e.g. Europe">
+                        <br>
+                        <label class="o-forms__label" for="yearSelect">Year</label>
+                        <select placeholder="Select year" id="yearSelect" v-model="year" data-size="10" class="o-forms__select">
                                 <option v-for="option in yearList" :value="option" :key="option">
                                     {{ option }}
                                 </option>
                             </select>
                     </div>
+                <br>   
+                <button type="button" :disabled="word == ''" @click="fetchResults()" class="o-buttons o-buttons--primary">Submit!</button>
+                <button type="button" v-show="searchCompleted" @click="clearResults()" class="o-buttons o-buttons--secondary">Reset</button>
                 </form>
-                <button v-show="searchCompleted" @click="clearResults()" class="btn btn-default btn-sm">Reset</button>
-                <button :disabled="word == ''" @click="fetchResults()" class="btn btn-primary btn-sm">Submit!</button>
-                <span v-if="loading">Loading...</span>
+                <div v-if="loading" class="o-loading o-loading--dark o-loading--small"></div>
             </div>
         </div>
-        <div class="row" v-show="searchCompleted">
-            <div class="col-md-6">
-                <h4 class="text-center">Mentions</h4>
+        <div class="o-grid-row">
+		<div data-o-grid-colspan="">
+				
+		</div>
+	    </div>
+        <div class="o-grid-row" style="margin: 0 auto;" v-show="searchCompleted">
+            <div data-o-grid-colspan="6">
+                <h4 class="o-typography-heading-level-4 center">Mentions</h4>
                 <result-chart></result-chart>
             </div>
-            <div class="col-md-6">
-            <h4 class="text-center">People</h4>
+            <div data-o-grid-colspan="6">
+            <h4 class="o-typography-heading-level-4 center">People</h4>
             <facet-chart :kiosk="false" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
-        <div class="row" v-show="searchCompleted">
-            <div class="col-md-6">
-            <h4 class="text-center">Organisations</h4>
+        <div class="o-grid-row" v-show="searchCompleted">
+            <div data-o-grid-colspan="6">
+            <h4 class="o-typography-heading-level-4 center">Organisations</h4>
             <facet-chart :kiosk="false" :facetData.sync="this.$data.organisations" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
-            <div class="col-md-6">
-            <h4 class="text-center">Topics</h4>
+            <div data-o-grid-colspan="6">
+            <h4 class="o-typography-heading-level-4 center">Topics</h4>
             <facet-chart :kiosk="false" :facetData.sync="this.$data.topics" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>       

@@ -6,7 +6,7 @@ import KioskView from './views/KioskView'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 const router = new VueRouter({
-  linkExactActiveClass: "active",
+  linkExactActiveClass: "o-header-services__nav-link--selected",
   mode: 'history',
   routes: [
       {

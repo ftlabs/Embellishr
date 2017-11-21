@@ -1,20 +1,20 @@
 <template>
-<div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
+<div class="fluid-container">
+        <div class="o-grid-row">
+            <div data-o-grid-colspan="12">
                 <br>
-            <h1 class="display-4"><strong style="color:#566c73">Word of the year:</strong> "{{this.word}}" - <em>{{this.year}}</em> </h1>
+                <h1 class="o-typography-headline"><strong>&nbsp;Word Of The Year: </strong>"{{this.word}}" - {{this.year}}</h1>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-6">
+        <div class="o-grid-row">
+            <div data-o-grid-colspan="XL6">
                 <result-chart :kiosk="true"></result-chart>
             </div>
-            <div class="col-lg-6 facetChart">
+            <div data-o-grid-colspan="XL6" class="facetChart">
                 <facet-chart :kiosk="true" :facetData.sync="this.$data.facetData" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
-        <h3 class="text-center">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h5>
+        <h5 class="center o-typography-heading-level-5">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h5>
         </div>
 </div>    
 </template>
@@ -123,6 +123,8 @@
 </script>
 <style>
     .facetChart {
-        margin-top: 30px;
+        margin-top: 45px;
     }
+
+   
 </style>

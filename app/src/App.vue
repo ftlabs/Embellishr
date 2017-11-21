@@ -17,3 +17,13 @@ export default {
   }
 }
 </script>
+
+<style>
+  body {
+    margin: 0;
+  }
+  .center {
+    text-align: center;
+    margin: 0 auto;
+  }
+</style>
