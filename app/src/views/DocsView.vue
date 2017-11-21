@@ -58,7 +58,7 @@
 
 			<p>Gives a summary of the data, containing data mostly formated using objects</p>
 
-			<p><code>GET /api/summary<var>{word}</var>/<var>{year}</var></code></p>
+			<p><code>GET /api/summary/<var>{word}</var>/<var>{year}</var></code></p>
 
 			<table>
 				<tbody>
@@ -85,7 +85,7 @@
 
 			<p>Gives a the bare minimium amount of the data, containing data mostly formated using arrays</p>
 
-			<p><code>GET /api/condensed<var>{word}</var>/<var>{year}</var></code></p>
+			<p><code>GET /api/condensed/<var>{word}</var>/<var>{year}</var></code></p>
 
 			<table>
 				<tbody>
@@ -109,7 +109,7 @@
 
             <h2 id="kiosk">Kiosk Mode</h2>
 
-            <p>Kiosk mode takes in a 'data' query parameter, allowing you to pass along a formated string to display the dat.</p>
+            <p>Kiosk mode takes in a 'data' query parameter, allowing you to pass along a formated string to display the data.</p>
 
 			<p><code>GET /kisok?query=<var>{word}</var>:<var>{year}</var>:<var>{type}</var>,<var>{word}</var>:<var>{year}</var>:<var>{type}</var>?interval=<var>{time}</var></code></p>
 
@@ -135,7 +135,7 @@
 						<td><var>Type</var></td>
 						<td>URL <em>(optional)</em></td>
 						<td>
-							Type of graph to display (<var>organisation</var>, <var>person</var>, <var>topics</var>)
+							Type of graph to display (<var>organisations</var>, <var>people</var>, <var>topics</var>)
 						</td>
 					</tr>
                     <tr>
