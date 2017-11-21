@@ -4,6 +4,7 @@ import store from './store/store'
 import GraphView from './views/GraphView'
 import KioskView from './views/KioskView'
 import VueRouter from 'vue-router'
+import DocsView from './views/DocsView'
 Vue.use(VueRouter)
 const router = new VueRouter({
   linkExactActiveClass: "o-header-services__nav-link--selected",
@@ -17,6 +18,10 @@ const router = new VueRouter({
         path: '/kiosk',
         component: KioskView
       },
+      {
+        path: '/docs',
+        component: DocsView
+      }
   ]
 })
 

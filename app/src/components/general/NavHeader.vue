@@ -1,8 +1,5 @@
 <template>
   <header class="o-header-services" data-o-component="o-header">
-    <div class="o-header-services__related-content">
-			<a class="o-header-services__related-content-link" href="#">Help</a>
-		</div>
 	<div class="o-header-services__top o-header-services__container header-container">
 		<div class="o-header-services__hamburger">
 			<a class="o-header-services__hamburger-icon" href="#o-header-drawer" aria-controls="o-header-drawer"><span class="o-header__visually-hidden">Menu</span></a>
@@ -23,9 +20,7 @@
 					<router-link class="o-header-services__nav-link" to="/kiosk">Kiosk</router-link>
 				</li>
 				<li class="o-header-services__nav-item">
-					<a class="o-header-services__nav-link" href="/api">
-						API Docs
-					</a>
+					<router-link class="o-header-services__nav-link" to="/docs">Docs</router-link>
 				</li>
 			</ul>
 		</div>
