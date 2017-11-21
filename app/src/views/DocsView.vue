@@ -111,9 +111,9 @@
 
             <p>Kiosk mode takes in a 'data' query parameter, allowing you to pass along a formated string to display the data.</p>
 
-			<p><code>GET /kisok?query=<var>{word}</var>:<var>{year}</var>:<var>{type}</var>,<var>{word}</var>:<var>{year}</var>:<var>{type}</var>?interval=<var>{time}</var></code></p>
+			<p><code>GET /kisok?query=<var>{word}</var>:<var>{year}</var>:<var>{type}</var>,<var>{word}</var>:<var>{year}</var>:<var>{type}</var>&amp;interval=<var>{time}</var></code></p>
 
-            <p>e.g. /kiosk?data=brexit:2016:people,europe:2017:topics?interval=5</p>
+            <p>e.g. /kiosk?data=brexit:2016:people,europe:2017:topics&amp;interval=5</p>
 			<table>
 				<tbody>
 					<tr>
@@ -146,14 +146,10 @@
 						</td>
 					</tr>
 				</tbody>
-			</table>
-
-
-		
+			</table>		
 		</div>
-
-	</div> <!-- /.o-techdocs-layout -->
-</div> <!-- /.o-techdocs-container -->
+	</div> 
+</div>
 
 <footer class="o-techdocs-footer">
 	<div class="o-techdocs-footer__inner">
