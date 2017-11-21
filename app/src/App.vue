@@ -24,4 +24,8 @@ export default {
     text-align: center;
     margin: 0 auto;
   }
+
+  small, p, span {
+    font-family: MetricWeb,sans-serif;
+  }
 </style>

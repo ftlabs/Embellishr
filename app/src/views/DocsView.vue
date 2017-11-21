@@ -30,7 +30,7 @@
 
             <h3 id="api-full">Full</h3>
 
-			<p>Gives the full amount of data, unaltered from the FT developer API.</p>
+			<p>Gives the full amount of data, largely unaltered from the FT developer API.</p>
 
 			<p><code>GET /api/<var>{word}</var>/<var>{year}</var></code></p>
 
@@ -56,7 +56,7 @@
 
             <h3 id="api-summary">Summary</h3>
 
-			<p>Gives a summary of the data, containing data mostly formated using objects</p>
+			<p>Gives a summary of the data, formated mostly using objects.</p>
 
 			<p><code>GET /api/summary/<var>{word}</var>/<var>{year}</var></code></p>
 
@@ -83,7 +83,7 @@
 
             <h3 id="api-condensed">Condensed</h3>
 
-			<p>Gives a the bare minimium amount of the data, containing data mostly formated using arrays</p>
+			<p>Gives the minimium amount of data, formated mostly using arrays.</p>
 
 			<p><code>GET /api/condensed/<var>{word}</var>/<var>{year}</var></code></p>
 

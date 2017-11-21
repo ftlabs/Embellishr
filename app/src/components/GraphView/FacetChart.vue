@@ -126,4 +126,11 @@
         }
     }
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css">
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style>
+    .multiselect__tag {
+        background-color:#0d7680;
+    }
+</style>
+
