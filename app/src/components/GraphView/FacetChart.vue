@@ -81,7 +81,7 @@
                 })
                 let initialFacets = this.kiosk ? 3 : 1;
                 this.$data.selectedFacets = this.$data.facetList.slice(0, initialFacets);
-                this.createPersonData();
+                this.createFacetData();
             },
     
             renderLabel(item) {
@@ -91,12 +91,12 @@
     
             facetSelected(item) {
                 this.$data.selectedFacets.push(item);
-                this.createPersonData();
+                this.createFacetData();
             },
     
             facetRemoved(removed) {
                 this.$data.selectedFacets = this.$data.selectedFacets.filter(item => item !== removed)
-                this.createPersonData();
+                this.createFacetData();
             },
 
             initGraph() {
@@ -106,7 +106,7 @@
                 }
             },
     
-            createPersonData() {
+            createFacetData() {
                 const datasets = [];
                 for (let i = 0; i < this.$data.selectedFacets.length; i++) {
                     let facet = this.$data.selectedFacets[i];
@@ -124,8 +124,6 @@
             },
     
         }
-    
-    
     }
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css">

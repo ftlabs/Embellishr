@@ -129,5 +129,4 @@
     .fluid-container {
         padding: 40px;
     }
-   
 </style>

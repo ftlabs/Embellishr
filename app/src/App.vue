@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <NavHeader></NavHeader>
-    <div class="container-fluid">
           <router-view></router-view>
-    </div>
   </div>
 </template>
 

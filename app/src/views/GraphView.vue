@@ -15,17 +15,14 @@
                                 </option>
                             </select>
                     </div>
-                <br>   
-                <button type="button" :disabled="word == ''" @click="fetchResults()" class="o-buttons o-buttons--primary">Submit!</button>
-                <button type="button" v-show="searchCompleted" @click="clearResults()" class="o-buttons o-buttons--secondary">Reset</button>
+                    <br>   
+                    <button type="button" :disabled="word == ''" @click="fetchResults()" class="o-buttons o-buttons--primary">Submit!</button>
+                    <button type="button" v-show="searchCompleted" @click="clearResults()" class="o-buttons o-buttons--secondary">Reset</button>
                 </form>
                 <div v-if="loading" class="o-loading o-loading--dark o-loading--small"></div>
             </div>
         </div>
         <div class="o-grid-row">
-		<div data-o-grid-colspan="">
-				
-		</div>
 	    </div>
         <div class="o-grid-row" style="margin: 0 auto;" v-show="searchCompleted">
             <div data-o-grid-colspan="6 Xl6">
@@ -123,8 +120,6 @@
     
             clearResults() {
                 this.$data.person = "";
-                this.$data.peopleMap = null;
-                this.$data.peopleList = [];
                 this.$data.year = this.$data.yearList[0]; //set the year to first in select box
                 this.$data.word = "";
                 this.$data.searchCompleted = false;
