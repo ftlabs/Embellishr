@@ -1,12 +1,12 @@
 <template>
 <div class="fluid-container">
-        <div class="o-grid-row">
+        <div class="o-grid-row o-grid-row--compact">
             <div data-o-grid-colspan="12">
                 <br>
                 <h1 class="o-typography-headline"><strong>&nbsp;Word Of The Year: </strong>"{{this.word}}" - {{this.year}}</h1>
             </div>
         </div>
-        <div class="o-grid-row">
+        <div class="o-grid-row o-grid-row--compact">
             <div data-o-grid-colspan="XL6">
                 <result-chart :kiosk="true"></result-chart>
             </div>
@@ -14,7 +14,7 @@
                 <facet-chart :kiosk="true" :facetData.sync="this.$data.facetData" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
-        <h5 class="center o-typography-heading-level-5">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h5>
+        <h4 class="center o-typography-heading-level-4">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h4>
         </div>
 </div>    
 </template>
@@ -126,5 +126,8 @@
         margin-top: 45px;
     }
 
+    .fluid-container {
+        padding: 40px;
+    }
    
 </style>

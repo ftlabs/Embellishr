@@ -1,6 +1,9 @@
 <template>
   <header class="o-header-services" data-o-component="o-header">
-	<div class="o-header-services__top o-header-services__container">
+    <div class="o-header-services__related-content">
+			<a class="o-header-services__related-content-link" href="#">Help</a>
+		</div>
+	<div class="o-header-services__top o-header-services__container header-container">
 		<div class="o-header-services__hamburger">
 			<a class="o-header-services__hamburger-icon" href="#o-header-drawer" aria-controls="o-header-drawer"><span class="o-header__visually-hidden">Menu</span></a>
 		</div>
@@ -8,12 +11,10 @@
 		<div class="o-header-services__title">
 			<h1 class="o-header-services__product-name"><a href="/">FTLabs</a></h1><span class="o-header-subrand__product-tagline">Embellishr</span>
 		</div>
-		<div class="o-header-services__related-content">
-			<a class="o-header-services__related-content-link" href="#">Help</a>
-		</div>
+		
 	</div>
 	<div class="o-header-services__primary-nav">
-		<div class="o-header-services__container">
+		<div class="o-header-services__container header-container">
 			<ul class="o-header-services__nav-list">
 				<li class="o-header-services__nav-item">
 						<router-link class="o-header-services__nav-link" to="/">Home</router-link>
@@ -31,3 +32,9 @@
 	</div>
 </header>
 </template>
+<style>
+    .header-container {
+      margin-left:0;
+    }
+</style>
+
