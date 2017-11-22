@@ -123,7 +123,7 @@
 </script>
 <style>
     .facetChart {
-        margin-top: 45px;
+        margin-top: 59px;
     }
 
     .fluid-container {

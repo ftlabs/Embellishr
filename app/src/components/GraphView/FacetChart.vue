@@ -1,6 +1,6 @@
 <template>
 <div>
-<div v-if="!this.kiosk" style="float:right;">
+<div v-if="!this.kiosk">
     <div>
             <multiselect @select="facetSelected" @remove="facetRemoved" v-model="this.selectedFacets" :max="3" :options="this.facetList" :close-on-select="true" :select-label="null" :custom-label="renderLabel" :deselect-label="null" :multiple="true"
                 placeholder="Select an entity"></multiselect>

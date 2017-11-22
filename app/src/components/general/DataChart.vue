@@ -2,6 +2,7 @@
 
 <script>
 import { Line, mixins } from 'vue-chartjs'
+import {Chart} from 'chart.js';
 const { reactiveProp } = mixins
 
 export default {
@@ -17,9 +18,20 @@ export default {
 
   },
   mounted () {
+    const defaultGenerateLabels = Chart.defaults.global.legend.labels.generateLabels;
+    const kiosk = this.kiosk;
     const options = {
       legend: {
-          labels: {}
+          labels: {
+              generateLabels:  function (data) {
+                data.legend.afterFit = () => {
+                    let width = this.width;
+                    let divideFactor = kiosk ? 4 : 2;
+                    this.lineWidths = this.lineWidths.map(function(){return width - (width/divideFactor);});
+                };
+                return defaultGenerateLabels(data);
+                }   
+          }
       },
       responsive: true,
       scales: {

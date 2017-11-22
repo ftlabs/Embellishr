@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="results-chart">
     <data-chart :kiosk="this.kiosk" class="results-chart" ref="resultsGraph" :width="400" :height="this.kiosk ? 300 : 200" :chart-data="resultGraph"></data-chart>
 </div>
 </template>
@@ -81,6 +81,6 @@
 
 <style>
 .results-chart {
-    margin-top: 75px;
+    padding-top: 45px;
 } 
 </style>

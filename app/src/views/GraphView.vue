@@ -7,7 +7,7 @@
                         <br>
                         <label class="o-forms__label" for="searchWord">Word</label>
                         <input v-model="word" type="text" class="o-forms__text" id="searchWord" placeholder="e.g. Europe">
-                        <br>
+                        <br><br>
                         <label class="o-forms__label" for="yearSelect">Year</label>
                         <select placeholder="Select year" id="yearSelect" v-model="year" data-size="10" class="o-forms__select">
                                 <option v-for="option in yearList" :value="option" :key="option">
@@ -142,4 +142,3 @@
         }
     }
 </script>
-
