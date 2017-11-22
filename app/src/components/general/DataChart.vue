@@ -30,7 +30,7 @@ export default {
                     this.lineWidths = this.lineWidths.map(function(){return width - (width/divideFactor);});
                 };
                 return defaultGenerateLabels(data);
-                }   
+              }   
           }
       },
       responsive: true,

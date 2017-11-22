@@ -1,5 +1,5 @@
 <template>
-<div class="fluid-container">
+<div class="kiosk-container">
         <div class="o-grid-row o-grid-row--compact">
             <div data-o-grid-colspan="12">
                 <br>
@@ -75,7 +75,7 @@
                 facetType: '',
                 wordYearDataset: [],
                 facetData: [],
-                interval: 5000
+                interval: 15000
             }
         },
 
@@ -122,11 +122,21 @@
     }
 </script>
 <style>
+    .kiosk-container {
+        padding: 40px;
+    }
+
+    .kiosk-container h1 {
+        font-size: 3.5em;
+    }
+    
+    .kiosk-container h4 {
+        padding-top: 10px;
+    }
+
     .facetChart {
         margin-top: 59px;
     }
 
-    .fluid-container {
-        padding: 40px;
-    }
+    
 </style>
