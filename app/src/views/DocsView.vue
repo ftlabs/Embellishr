@@ -1,10 +1,7 @@
 <template>
 <div>
-    <!-- Hero banner to promote your service in a few words -->
-<!-- Navigation menu and main content -->
 <div class="o-techdocs-container">
 	<div class="o-techdocs-layout">
-
 		<!-- Navigation - optional, omit for single page docs.  o-techdocs-sidebar container allows an in-page navigation list to be appended after the site navigation -->
 		<div class="o-techdocs-sidebar">
 			<ul class="o-techdocs-nav">
@@ -18,10 +15,7 @@
 				<li><a href="#kiosk">Kiosk Mode</a></li>	
 			</ul>
 		</div>
-
-		<!-- Main content (outer div for layout, inner for formatting) -->
 		<div class="o-techdocs-main">
-			<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css"></link>
 			<div class="o-techdocs-content">
 
 			<h1>Embellishr Docs</h1>
@@ -111,7 +105,7 @@
 
             <p>Kiosk mode takes in a 'data' query parameter, allowing you to pass along a formated string to display the data.</p>
 
-			<p><code>GET /kiosk?query=<var>{word}</var>:<var>{year}</var>:<var>{type}</var>,<var>{word}</var>:<var>{year}</var>:<var>{type}</var>&amp;interval=<var>{time}</var></code></p>
+			<p><code>GET /kiosk?data=<var>{word}</var>:<var>{year}</var>:<var>{type}</var>,<var>{word}</var>:<var>{year}</var>:<var>{type}</var>&amp;interval=<var>{time}</var></code></p>
 
             <p>e.g. /kiosk?data=brexit:2016:people,europe:2017:topics&amp;interval=5</p>
 			<table>
@@ -150,7 +144,6 @@
 		</div>
 	</div> 
 </div>
-
 <footer class="o-techdocs-footer">
 	<div class="o-techdocs-footer__inner">
 		<p class="o-techdocs-footer__secondary"><a href="#">Back to top</a></p>
