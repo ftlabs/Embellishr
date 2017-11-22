@@ -19,10 +19,15 @@
                     <button type="button" :disabled="word == ''" @click="fetchResults()" class="o-buttons o-buttons--primary">Submit!</button>
                     <button type="button" v-show="searchCompleted" @click="clearResults()" class="o-buttons o-buttons--secondary">Reset</button>
                 </form>
-                <div v-if="loading" class="o-loading o-loading--dark o-loading--small"></div>
             </div>
         </div>
-        <div class="o-grid-row">
+        <div v-if="loading" class="o-grid-row">
+            <div data-o-grid-colspan="12">
+            <h4  class="o-typography-heading-level-4 center">
+                Searching...
+                <span class="o-loading o-loading--dark o-loading--small"></span>
+            </h4>
+            </div>
 	    </div>
         <div class="o-grid-row" style="margin: 0 auto;" v-show="searchCompleted">
             <div data-o-grid-colspan="6 Xl6">
