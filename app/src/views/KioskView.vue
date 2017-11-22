@@ -3,7 +3,7 @@
         <div class="o-grid-row o-grid-row--compact">
             <div data-o-grid-colspan="12">
                 <br>
-                <h1 class="o-typography-headline"><strong>&nbsp;Word Of The Year: </strong>"{{this.word}}" - {{this.year}}</h1>
+                <h1 class="o-typography-headline"><strong>&nbsp;Word Of The Year?&nbsp;</strong> "{{this.word}}" - {{this.year}}</h1>
             </div>
         </div>
         <div class="o-grid-row o-grid-row--compact">
