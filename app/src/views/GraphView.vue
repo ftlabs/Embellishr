@@ -105,6 +105,14 @@
     
         methods: {
 
+            track() {
+                let oTracking = Origami['o-tracking'];
+                oTracking.event({ detail: { category: 'embellishr', action: 'search-home', data: {
+                    word: this.word,
+                    year: this.year
+                } }, bubbles: true});
+            },
+
             extractData() {
                 if(!this.$route.query.hasOwnProperty('data')) {
                     return;
@@ -137,6 +145,7 @@
                 let dataString = `${this.$data.word}:${this.$data.year}`;
                 let routeData = {query: { data: dataString }};
                 this.$router.replace(routeData);
+                this.track();
             },        
 
         }
