@@ -3,20 +3,18 @@
         <div class="o-grid-row o-grid-row--compact">
             <div data-o-grid-colspan="12">
                 <br>
-                <h1 v-if="!errorMessage" class="o-typography-headline"><strong>&nbsp;Word Of The Year?&nbsp;</strong> "{{this.word}}" - {{this.year}}</h1>
-                <span v-if="errorMessage"><h1>{{errorMessage}}</h1></span>
-                <h2 v-if="errorMessage" class="o-typography-heading-level-2"><a href="/docs#kiosk">View Kiosk mode documentation</a></h2>
+                <h1 class="o-typography-headline"><strong>&nbsp;Word Of The Year?&nbsp;</strong> "{{this.word}}" - {{this.year}}</h1>
             </div>
         </div>
         <div class="o-grid-row o-grid-row--compact">
             <div data-o-grid-colspan="XL6">
-                <result-chart v-if="!errorMessage" :kiosk="true"></result-chart>
+                <result-chart :kiosk="true"></result-chart>
             </div>
             <div data-o-grid-colspan="XL6" class="facetChart">
-                <facet-chart v-if="!errorMessage" :kiosk="true" :facetData.sync="this.$data.facetData" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+                <facet-chart  :kiosk="true" :facetData.sync="this.$data.facetData" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
-        <h4 v-if="!errorMessage" class="center o-typography-heading-level-4">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h4>
+        <h4 class="center o-typography-heading-level-4">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h4>
         </div>
 </div>
 </template>
@@ -37,13 +35,14 @@
         },
 
         computed: mapGetters({
-            responseData: 'getResults'
+            responseData: 'getResults',
+            searchTerms: 'getRecentSearchTerms'
         }),
 
          beforeDestroy() {
             clearInterval(this.interval);
          },
-
+        
         watch: {
             responseData (newer, old) {
                 let facetData;
@@ -62,6 +61,10 @@
                         break;
                 }
                 this.$data.facetData = facetData;
+            },
+            searchTerms (newer, old) {
+                this.$route.query.data = newer.join(',');
+                this.extractData();
             }
         },
 
@@ -74,7 +77,6 @@
                 wordYearDataset: [],
                 facetData: [],
                 interval: 15000,
-                errorMessage: null
             }
         },
 
@@ -93,10 +95,9 @@
 
             extractData() {
                 if(!this.$route.query.hasOwnProperty('data') || this.$route.query.data === null) {
-                    this.$data.errorMessage = 'No data loaded!'
+                    this.$store.dispatch('FETCH_SEARCH_TERMS');
                     return;
                 }
-                this.$data.errorMessage = null;
                 if(this.$route.query.hasOwnProperty('interval')) {
                     this.$data.interval = this.$route.query.interval * 1000;
                 }
