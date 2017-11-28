@@ -6,8 +6,13 @@ const CAPI_KEY = process.env.CAPI_KEY;
 if (! CAPI_KEY ) {
 	throw new Error('ERROR: CAPI_KEY not specified in env');
 }
+const KEEN_KEY = process.env.KEEN_KEY;
+if (! KEEN_KEY ) {
+	throw new Error('ERROR: KEEN_KEY not specified in env');
+}
 const CAPI_PATH = 'http://api.ft.com/enrichedcontent/';
 const SAPI_PATH = 'http://api.ft.com/content/search/v1';
+const KEEN_PATH = 'https://keen-proxy.ft.com/3.0/projects/56671212d2eaaa6dd6483dae/queries/count?event_collection=page%3Aview&timeframe=this_14_days&group_by=page.location.search&filters=%5B%7B%22property_name%22%3A%22context.product%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22next%22%7D%2C%7B%22property_name%22%3A%22page.location.search%22%2C%22operator%22%3A%22exists%22%2C%22property_value%22%3Atrue%7D%2C%7B%22property_name%22%3A%22page.location.search%22%2C%22operator%22%3A%22exists%22%2C%22property_value%22%3Atrue%7D%5D'; // &api_key=
 
 // NB: should only match basic ontology values, maybe with Id suffix, e.g. people and peopleId,
 // and *not* other constraint fields such as lastPublishDateTime
@@ -221,11 +226,37 @@ function searchWordBetweenRange(word, afterIsotime, beforeIsotime, params={}) {
 	params.constraints = params.constraints.concat( timeConstraints );
 	params.month = afterIsotime;
 	params.queryString = queryString;
-	
+
 	return search( params );
+}
+
+function latestSearchTerms( num=10 ){
+	const keenUrl = `${KEEN_PATH}&api_key=${KEEN_KEY}`;
+	return fetchResText(keenUrl)
+	.then( text  => {
+		let result;
+		try {
+		 	result = JSON.parse(text);
+		}
+		catch( err ){
+			throw new Error(`JSON.parse: err=${err},
+				text=${text},
+				keenUrl=${keenUrl}`);
+		}
+		// {"result": [{"page.location.search": "", "result": 1245}, {"page.location.search": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b", "result": 1}, {"page.location.search": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\bcentral europe grows at fastest", "result": 2}, {"page.location.search": "\t Boardrooms\u2019 missing voices undermine risk management", "result": 1}, ...
+		const listOfTermsWithCounts = (result.hasOwnProperty('result'))? result.result : [];
+		const sortedList = listOfTermsWithCounts.sort( (a,b) => { return b.result - a.result; } ); // desc
+		const terms      = sortedList.map( item => { return item['page.location.search']; });
+		const trimmedTerms = terms.map( term => term.trim() );
+		const safeTerms  = trimmedTerms.filter( term => term.match(/^[a-zA-z][a-zA-z ]*$/) );
+		const topNTerms  = safeTerms.slice(0,num);
+		return topNTerms;
+	})
+	;
 }
 
 module.exports = {
 	searchWordBetweenRange,
 	summariseFetchTimings,
+	latestSearchTerms,
 };
