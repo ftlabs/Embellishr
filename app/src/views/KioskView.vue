@@ -18,7 +18,7 @@
         </div>
         <h4 v-if="!errorMessage" class="center o-typography-heading-level-4">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h4>
         </div>
-</div>    
+</div>
 </template>
 
 <script>
@@ -29,7 +29,7 @@
     let position = 0;
 
     export default {
-    
+
         components: {
             Multiselect,
             ResultChart,
@@ -81,7 +81,7 @@
         mounted() {
             this.extractData();
         },
-    
+
         methods: {
 
              track(data) {
@@ -92,7 +92,7 @@
             },
 
             extractData() {
-                if(!this.$route.query.hasOwnProperty('data')) {
+                if(!this.$route.query.hasOwnProperty('data') || this.$route.query.data === null) {
                     this.$data.errorMessage = 'No data loaded!'
                     return;
                 }
@@ -105,13 +105,16 @@
                 for(let pair of wordYearPairs) {
                     let word, year, type;
                     [word, year, type] = pair.split(':');
+                    word = (word === ''       )? 'brexit' : word;
+                    year = (year === undefined)? '2017'   : year;
+                    type = (type === undefined)? 'people' : type;
                     this.$data.wordYearDataset.push({word, year, type})
                 }
                 this.track(data);
                 this.rotateData();
                 this.interval = setInterval(this.rotateData, this.$data.interval);
             },
-            
+
             rotateData() {
                 if (position >= this.$data.wordYearDataset.length) position = 0;
                 this.word = this.$data.wordYearDataset[position].word;
@@ -120,11 +123,11 @@
                 position++;
                 this.fetchResults();
             },
-    
+
             fetchResults() {
                 this.$store.commit('updateSearchParams', {word: this.word, year: this.year});
                 this.$store.dispatch('FETCH_DATA');
-            },        
+            },
 
         }
     }
@@ -137,7 +140,7 @@
     .kiosk-container h1 {
         font-size: 3.5em;
     }
-    
+
     .kiosk-container h4 {
         padding-top: 10px;
     }
