@@ -41,8 +41,8 @@ const actions = {
         })
     },
 
-    FETCH_SEARCH_TERMS({ commit }) {
-        api.getRecentSearchTerms(10).then(response => {
+    FETCH_SEARCH_TERMS({ commit }, numberOfTerms) {
+        api.getRecentSearchTerms(numberOfTerms).then(response => {
             commit('updateRecentSearchTerms', response)
         }, () => {
             console.log('Error fetching recent search terms')

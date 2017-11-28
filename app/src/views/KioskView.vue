@@ -95,7 +95,7 @@
 
             extractData() {
                 if(!this.$route.query.hasOwnProperty('data') || this.$route.query.data === null) {
-                    this.$store.dispatch('FETCH_SEARCH_TERMS');
+                    this.$store.dispatch('FETCH_SEARCH_TERMS',10);
                     return;
                 }
                 if(this.$route.query.hasOwnProperty('interval')) {
