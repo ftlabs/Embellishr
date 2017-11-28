@@ -84,6 +84,23 @@ app.get('/api/condensed/:year([0-9]{4})/:word', (req, res) => {
   })
 });
 
+app.get('/api/topSearchTerms/:num', (req, res) => {
+  const num = parseInt(req.params.num);
+  fetchContent.latestSearchTerms(num)
+  .then(terms => {
+    let response = {
+      description: 'recent, top searched-for terms on ft.com',
+      num,
+      terms
+    };
+    res.setHeader('Cache-Control', `private, max-age=${API_CACHE_TIME}`)
+    res.json(response);
+  }).catch(error => {
+    console.log(error);
+  })
+});
+
+
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname + '/app/dist/index.html'));
 });

@@ -13,25 +13,29 @@
     <h2>Endpoints (NB, all behind SSO. Will be tokenized later.)</h2>
 
     <ul>
-      <li>/api/:year/:word</li>  
+      <li>/api/:year/:word</li>
       <ul>
         <li>e.g., <a href="/api/2016/europe" />Full data for 'Europe' mentions throughtout 2016</a></li>
       </ul>
-      <li>/api/:year/:word?person=person</li>        
+      <li>/api/:year/:word?person=person</li>
       <ul>
         <li>e.g., <a href="/api/summary/2016/europe?person=David%20Cameron" />All data for 'Europe' mentions involving David Cameron throughout 2016 </a></li>
       </ul>
-      <li>/api/:year/:month/:word</li>  
+      <li>/api/:year/:month/:word</li>
       <ul>
         <li>e.g., <a href="/api/2016/02/europe" />Full data for 'Europe' mentions throughtout Febuary, 2016</a></li>
       </ul>
-      <li>/api/summary/:year/:word</li>  
+      <li>/api/summary/:year/:word</li>
       <ul>
         <li>e.g., <a href="/api/summary/2016/europe" />As above, but with a less verbose response.</a></li>
       </ul>
-      <li>/api/condensed/:year/:word</li>  
+      <li>/api/condensed/:year/:word</li>
       <ul>
         <li>e.g., <a href="/api/summary/2016/europe" />Minimium view containg the indexCount for each month and associated facets</a></li>
+      </ul>
+      <li>/api/topSearchTerms/:num</li>
+      <ul>
+        <li>e.g., <a href="/api/topSearchTerms/10" />top 10 most recently searched for terms</a></li>
       </ul>
     </ul>
 
