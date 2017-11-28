@@ -42,7 +42,7 @@
          beforeDestroy() {
             clearInterval(this.interval);
          },
-        
+
         watch: {
             responseData (newer, old) {
                 let facetData;
@@ -95,7 +95,8 @@
 
             extractData() {
                 if(!this.$route.query.hasOwnProperty('data') || this.$route.query.data === null) {
-                    this.$store.dispatch('FETCH_SEARCH_TERMS',10);
+                    const num = (!this.$route.query.hasOwnProperty('num') || this.$route.query.num === null || this.$route.query.num < 1)? 10 : this.$route.query.num;
+                    this.$store.dispatch('FETCH_SEARCH_TERMS',num);
                     return;
                 }
                 if(this.$route.query.hasOwnProperty('interval')) {
