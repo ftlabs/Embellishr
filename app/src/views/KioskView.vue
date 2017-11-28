@@ -6,6 +6,10 @@
                 <h1 class="o-typography-headline"><strong>&nbsp;Word Of The Year?&nbsp;</strong> "{{this.word}}" - {{this.year}}</h1>
             </div>
         </div>
+        <h3 v-if="loading" class="center o-typography-heading-level-3">Retrieving most recent search terms...
+            <span class="o-loading o-loading--dark o-loading--small"></span>
+        </h3>
+        
         <div class="o-grid-row o-grid-row--compact">
             <div data-o-grid-colspan="XL6">
                 <result-chart :kiosk="true"></result-chart>
@@ -65,6 +69,7 @@
             searchTerms (newer, old) {
                 this.$route.query.data = newer.join(',');
                 this.extractData();
+                this.$data.loading = false;
             }
         },
 
@@ -77,6 +82,7 @@
                 wordYearDataset: [],
                 facetData: [],
                 interval: 15000,
+                loading: false
             }
         },
 
@@ -96,6 +102,7 @@
             extractData() {
                 if(!this.$route.query.hasOwnProperty('data') || this.$route.query.data === null) {
                     const num = (!this.$route.query.hasOwnProperty('num') || this.$route.query.num === null || this.$route.query.num < 1)? 10 : this.$route.query.num;
+                    this.$data.loading = true;
                     this.$store.dispatch('FETCH_SEARCH_TERMS',num);
                     return;
                 }
