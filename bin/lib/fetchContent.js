@@ -13,6 +13,9 @@ if (! KEEN_KEY ) {
 const CAPI_PATH = 'http://api.ft.com/enrichedcontent/';
 const SAPI_PATH = 'http://api.ft.com/content/search/v1';
 const KEEN_PATH = 'https://keen-proxy.ft.com/3.0/projects/56671212d2eaaa6dd6483dae/queries/count?event_collection=page%3Aview&timeframe=this_14_days&group_by=page.location.search&filters=%5B%7B%22property_name%22%3A%22context.product%22%2C%22operator%22%3A%22eq%22%2C%22property_value%22%3A%22next%22%7D%2C%7B%22property_name%22%3A%22page.location.search%22%2C%22operator%22%3A%22exists%22%2C%22property_value%22%3Atrue%7D%2C%7B%22property_name%22%3A%22page.location.search%22%2C%22operator%22%3A%22exists%22%2C%22property_value%22%3Atrue%7D%5D'; // &api_key=
+const SimpleCache = require('./simple-cache');
+const SearchCache = new SimpleCache();
+const CACHE_TIME = (process.env.SERVER_CACHE_DURATION_MILLIS || 15 * 60) * 1000; //Default 15 minute server cache
 
 // NB: should only match basic ontology values, maybe with Id suffix, e.g. people and peopleId,
 // and *not* other constraint fields such as lastPublishDateTime
@@ -182,10 +185,18 @@ function fetchResText(url, options){
 
 function search(params) {
 	const sapiUrl = `${SAPI_PATH}?apiKey=${CAPI_KEY}`;
+	const searchResult = SearchCache.read(params);
+	if (searchResult !== undefined) {
+		console.log(`Cache hit: ${params.queryString}: ${params.month}`)
+		return Promise.resolve({
+			params,
+			sapiObj: searchResult
+		})
+	}
 	const sapiQuery = constructSAPIQuery( params );
 	const options = {
-		 method: 'POST',
-       body: JSON.stringify(sapiQuery),
+		method: 'POST',
+       	body: JSON.stringify(sapiQuery),
 		headers: {
 			'Content-Type' : 'application/json',
 		}
@@ -202,6 +213,7 @@ function search(params) {
 				text=${text},
 				params=${params}`);
 		}
+		SearchCache.writeWithExpiry(params, sapiObj, CACHE_TIME);
 		return {
 			params,
 			sapiObj
