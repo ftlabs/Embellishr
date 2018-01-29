@@ -115,8 +115,8 @@
                     let word, year, type;
                     [word, year, type] = pair.split(':');
                     word = (word === ''       )? 'brexit' : word;
-                    year = (year === undefined)? '2017'   : year;
                     type = (type === undefined)? 'people' : type;
+                    //if no year, we will use the last 12 months relative to the current date.
                     this.$data.wordYearDataset.push({word, year, type})
                 }
                 this.track(data);

@@ -16,7 +16,6 @@ const KEEN_PATH = 'https://keen-proxy.ft.com/3.0/projects/56671212d2eaaa6dd6483d
 const SimpleCache = require('./simple-cache');
 const SearchCache = new SimpleCache();
 const CACHE_TIME = (process.env.SERVER_CACHE_DURATION || 900) * 1000; //Default 15 minute server cache
-
 // NB: should only match basic ontology values, maybe with Id suffix, e.g. people and peopleId,
 // and *not* other constraint fields such as lastPublishDateTime
 const EntityRegex = /^([a-z]+(?:Id)?):(.+)$/;

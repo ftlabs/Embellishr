@@ -37,6 +37,38 @@ function _fetchYear(word, year, params={}) {
     return directly(CAPI_CONCURRENCE, wordLookupPromisers)
 }
 
+
+/**
+ * Create concurrent fetches for each month (uses directly)
+ */
+function _fetchRelativeYear(word, params={}) {
+    console.log("RELATIVE YEAR IS CALLED");
+    let pastDate = new Date();
+    pastDate.setFullYear(pastDate.getFullYear() - 1);
+    const wordLookupPromisers = []  
+    wordLookupPromisers.push(() => lookupWordByMonth(word, pastDate.getFullYear(), pastDate.getMonth() + 1, params));    
+    for(let i = 0; i <= 12; i++) {
+        pastDate = _offsetMonths(pastDate, 1);
+        let newDate = pastDate;
+        wordLookupPromisers.push(() => lookupWordByMonth(word, newDate.getFullYear(), newDate.getMonth() + 1, params));
+    }
+    return directly(CAPI_CONCURRENCE, wordLookupPromisers)
+}
+
+/**
+ * Add a specified no of months
+ * @param {*} date 
+ * @param {*} offset 
+ */
+function _offsetMonths(oldDate, offset) {
+        let dt = new Date(oldDate);
+        dt.setMonth(dt.getMonth()+ offset) ;
+        if (dt.getDate() < oldDate.getDate()) { dt.setDate(0); }
+        console.log("THE RETURNED DATE IS ")
+        console.log(dt);    
+        return dt;
+}
+
 /**
  * Returns a summary of the year
  * @param {*} word 
@@ -61,14 +93,16 @@ function yearSummary(word, year) {
     });
 }
 
-function condensedSummary(word, year) {
+function condensedSummary(word, year=null) {
     let summaryResponse = {
         months: [],
         people: {},
         topics: {},
         organisations: {}
     }
-    return _fetchYear(word, year).then(responses => {
+    let fetchYear = year ? () => _fetchYear(word, year) : () => _fetchRelativeYear(word);
+    return fetchYear().then(responses => {
+        console.log(responses);
         for(let response of responses) {
             let indexCount = null;
             let facets = null;

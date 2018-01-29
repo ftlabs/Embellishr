@@ -70,6 +70,19 @@ app.get('/api/summary/:year([0-9]{4})/:word', (req, res) => {
   })
 });
 
+app.get('/api/condensed/:word', (req, res) => {
+  const word = req.params.word;
+  embellish.condensedSummary(word).then(results => {
+    let response = {};
+    response['searchTerm'] = word;
+    response['relative'] = results;
+    res.setHeader('Cache-Control', `private, max-age=${API_CACHE_TIME}`)
+    res.json(response);
+  }).catch(error => {
+    console.log(error);
+  })
+});
+
 app.get('/api/condensed/:year([0-9]{4})/:word', (req, res) => {
   const year = parseInt(req.params.year);
   const word = req.params.word;
