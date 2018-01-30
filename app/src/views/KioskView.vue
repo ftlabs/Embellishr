@@ -50,6 +50,7 @@
         watch: {
             responseData (newer, old) {
                 let facetData;
+                
                 switch(this.facetType) {
                     case "people":
                         facetData = newer[this.year].people;
@@ -115,8 +116,8 @@
                     let word, year, type;
                     [word, year, type] = pair.split(':');
                     word = (word === ''       )? 'brexit' : word;
+                    year = (year === undefined)?  new Date().getFullYear() : year;
                     type = (type === undefined)? 'people' : type;
-                    //if no year, we will use the last 12 months relative to the current date.
                     this.$data.wordYearDataset.push({word, year, type})
                 }
                 this.track(data);
