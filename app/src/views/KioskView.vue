@@ -12,10 +12,10 @@
         
         <div class="o-grid-row o-grid-row--compact">
             <div data-o-grid-colspan="XL6">
-                <result-chart :kiosk="true"></result-chart>
+                <result-chart :labels="chartLabels" :kiosk="true" :resultData.sync="this.$data.monthResults" :word.sync="this.$data.word" :year.sync="this.$data.year"></result-chart>
             </div>
             <div data-o-grid-colspan="XL6" class="facetChart">
-                <facet-chart  :kiosk="true" :facetData.sync="this.$data.facetData" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+                <facet-chart :labels="chartLabels" :kiosk="true" :facetData.sync="this.$data.facetData" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
         <h4 class="center o-typography-heading-level-4">Try this at <strong>https://ftlabs-embellishr.herokuapp.com/</strong></h4>
@@ -50,7 +50,12 @@
         watch: {
             responseData (newer, old) {
                 let facetData;
-                
+                if(typeof this.year == 'undefined') {
+                    const currentYear = new Date().getFullYear()
+                    const previousYear = new Date().getFullYear() - 1;
+                    const yearRange = `${previousYear}-${currentYear}`
+                    this.year = yearRange;
+                }
                 switch(this.facetType) {
                     case "people":
                         facetData = newer[this.year].people;
@@ -66,6 +71,8 @@
                         break;
                 }
                 this.$data.facetData = facetData;
+                this.$data.chartLabels = newer[this.year].monthLabels;
+                this.$data.monthResults = newer[this.year].months;
             },
             searchTerms (newer, old) {
                 this.$route.query.data = newer.join(',');
@@ -82,8 +89,10 @@
                 facetType: '',
                 wordYearDataset: [],
                 facetData: [],
+                monthResults: [],
                 interval: 15000,
-                loading: false
+                loading: false,
+                chartLabels: []
             }
         },
 
@@ -116,7 +125,6 @@
                     let word, year, type;
                     [word, year, type] = pair.split(':');
                     word = (word === ''       )? 'brexit' : word;
-                    year = (year === undefined)?  new Date().getFullYear() : year;
                     type = (type === undefined)? 'people' : type;
                     this.$data.wordYearDataset.push({word, year, type})
                 }

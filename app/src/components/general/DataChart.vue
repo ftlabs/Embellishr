@@ -50,8 +50,8 @@ export default {
      }
     }
     if(this.kiosk) {
-        options.scales.yAxes[0].ticks.fontSize=22;
-        options.scales.xAxes[0].ticks.fontSize=22;
+        options.scales.yAxes[0].ticks.fontSize=20;
+        options.scales.xAxes[0].ticks.fontSize=20;
         options.legend.labels.fontSize = 20;
     }
     this.renderChart(this.chartData, options)

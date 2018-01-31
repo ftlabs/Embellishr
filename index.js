@@ -72,10 +72,13 @@ app.get('/api/summary/:year([0-9]{4})/:word', (req, res) => {
 
 app.get('/api/condensed/:word', (req, res) => {
   const word = req.params.word;
+  const currentYear = new Date().getFullYear()
+  const previousYear = new Date().getFullYear() - 1;
+  const yearRange = `${previousYear}-${currentYear}`
   embellish.condensedSummary(word).then(results => {
     let response = {};
     response['searchTerm'] = word;
-    response['relative'] = results;
+    response[yearRange] = results;
     res.setHeader('Cache-Control', `private, max-age=${API_CACHE_TIME}`)
     res.json(response);
   }).catch(error => {

@@ -46,7 +46,8 @@
             'word',
             'year',
             'facetData',
-            'kiosk'
+            'kiosk',
+            'labels'
         ],
 
         data() {
@@ -101,7 +102,7 @@
 
             initGraph() {
                 this.$data.facetGraph = {
-                    labels: labels,
+                    labels: null,
                     datasets: []
                 }
             },
@@ -120,6 +121,11 @@
                 }
                 this.$data.facetGraph.datasets = datasets;
                 this.$set(this.$data.facetGraph, "datasets", datasets)
+                console.log(this.$data.facetGraph.labels);
+                if (!this.$data.facetGraph.labels || this.$data.facetGraph.labels.length == 0) {
+                    console.log("CALLLED");
+                    this.$set(this.$data.facetGraph, "labels", this.labels);
+                }
                 this.$refs.facetGraph.update();
             },
     
