@@ -112,7 +112,7 @@
                 for (let i = 0; i < this.$data.selectedFacets.length; i++) {
                     let facet = this.$data.selectedFacets[i];
                     let dataset = {
-                        label: `Mentions of ${facet} and "${this.word}" over ${this.year}`,
+                        label: `Mentions of ${facet} and "${this.word}" : ${this.year}`,
                         data: this.$data.facetMap[facet],
                         backgroundColor: [`rgba(${colors[i]}, 0.2`],
                         borderColor: [`rgba(${colors[i]}, 1`]
