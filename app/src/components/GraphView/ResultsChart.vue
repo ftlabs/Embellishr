@@ -66,7 +66,7 @@
             },
 
             createResultData(months) {
-                let label = `Mentions of "${this.word}" over ${this.year}`
+                let label = `Mentions of "${this.word}" : ${this.year}`
                 this.$set(this.$data.resultGraph.datasets[0], "data", months)
                 this.$set(this.$data.resultGraph.datasets[0], "label", label)
                 this.$set(this.$data.resultGraph, "labels", this.labels);
