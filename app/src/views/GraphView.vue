@@ -36,7 +36,7 @@
             </div>
             <div data-o-grid-colspan="6 XL6">
             <h4 class="o-typography-heading-level-4 center">People</h4>
-            <facet-chart :kiosk="false" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            <facet-chart :labels="chartLabels"   :kiosk="false" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
         <div class="o-grid-row" v-show="searchCompleted">
@@ -46,7 +46,7 @@
             </div>
             <div data-o-grid-colspan="6 XL6">
             <h4 class="o-typography-heading-level-4 center">Topics</h4>
-            <facet-chart :kiosk="false" :facetData.sync="this.$data.topics" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            <facet-chart :labels="chartLabels"  :kiosk="false" :facetData.sync="this.$data.topics" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>       
 </div>    

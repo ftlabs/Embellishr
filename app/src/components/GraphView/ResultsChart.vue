@@ -48,9 +48,6 @@
 
             updateData() {
                 let months = this.resultData;
-                console.log(this.year)
-                console.log(this.resultData);
-                console.log('marker')
                 this.createResultData(months)
             },
 
@@ -72,7 +69,6 @@
                 let label = `Mentions of "${this.word}" over ${this.year}`
                 this.$set(this.$data.resultGraph.datasets[0], "data", months)
                 this.$set(this.$data.resultGraph.datasets[0], "label", label)
-
                 this.$set(this.$data.resultGraph, "labels", this.labels);
                 this.$refs.resultsGraph.update();
             },
