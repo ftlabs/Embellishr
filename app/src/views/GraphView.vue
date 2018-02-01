@@ -32,21 +32,21 @@
         <div class="o-grid-row" style="margin: 0 auto;" v-show="searchCompleted">
             <div data-o-grid-colspan="6 Xl6">
                 <h4 class="o-typography-heading-level-4 center">Mentions</h4>
-                <result-chart></result-chart>
+                <result-chart :labels="chartLabels" :resultData.sync="this.$data.monthResults" :word.sync="this.$data.word" :year.sync="this.$data.year"></result-chart>
             </div>
             <div data-o-grid-colspan="6 XL6">
             <h4 class="o-typography-heading-level-4 center">People</h4>
-            <facet-chart :kiosk="false" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            <facet-chart :labels="chartLabels"   :kiosk="false" :facetData.sync="this.$data.people" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>
         <div class="o-grid-row" v-show="searchCompleted">
             <div data-o-grid-colspan="6 XL6">
             <h4 class="o-typography-heading-level-4 center">Organisations</h4>
-            <facet-chart :kiosk="false" :facetData.sync="this.$data.organisations" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            <facet-chart :labels="chartLabels" :kiosk="false" :facetData.sync="this.$data.organisations" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
             <div data-o-grid-colspan="6 XL6">
             <h4 class="o-typography-heading-level-4 center">Topics</h4>
-            <facet-chart :kiosk="false" :facetData.sync="this.$data.topics" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
+            <facet-chart :labels="chartLabels"  :kiosk="false" :facetData.sync="this.$data.topics" :word.sync="this.$data.word" :year.sync="this.$data.year"></facet-chart>
             </div>
         </div>       
 </div>    
@@ -77,6 +77,8 @@
                 this.$data.organisations = newer[this.year].organisations;
                 this.$data.people = newer[this.year].people;
                 this.$data.topics = newer[this.year].topics;
+                this.$data.chartLabels = newer[this.year].monthLabels;
+                this.$data.monthResults = newer[this.year].months;
             }
         },
 
@@ -89,7 +91,9 @@
                 year: '',
                 organisations: [],
                 people: [],
-                topics: []
+                topics: [],
+                chartLabels: [],
+                monthResults: [],
             }
         },
 

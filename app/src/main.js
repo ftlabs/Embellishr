@@ -7,7 +7,7 @@ import VueRouter from 'vue-router'
 import DocsView from './views/DocsView'
 Vue.use(VueRouter)
 const router = new VueRouter({
-  linkExactActiveClass: "o-header-services__nav-link--selected",
+  linkActiveClass: "o-header-services__nav-link--selected",
   mode: 'history',
   routes: [
       {

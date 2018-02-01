@@ -17,7 +17,7 @@ const monthMap = [ "January", "February", "March", "April", "May", "June",
  */ 
 function lookupWordByYear(word, year, params={}) {
     let yearResponse = {};
-    return _fetchYear(word, year, params).then( searchResponses => {
+    return _fetchYear(word, year, params).then(searchResponses => {
         for(let response of searchResponses) {
             let month = new Date(response.params.month).getMonth() + 1;
             yearResponse[monthMap[month]] = response.sapiObj.results;
@@ -35,6 +35,36 @@ function _fetchYear(word, year, params={}) {
         wordLookupPromisers.push(() => lookupWordByMonth(word, year, i, params));
     }
     return directly(CAPI_CONCURRENCE, wordLookupPromisers)
+}
+
+/**
+ * Create concurrent fetches for each month, 
+ * calculating the last year relative to todays date (uses directly)
+ */
+function _fetchRelativeYear(word, params={}) {
+    let pastDate = new Date();
+    pastDate.setFullYear(pastDate.getFullYear() - 1);
+    let currentDate = pastDate;
+    const wordLookupPromisers = []  
+    //wordLookupPromisers.push(() => lookupWordByMonth(word, currentDate.getFullYear(), currentDate.getMonth() + 1, params));   
+    for(let i = 0; i < 12; i++) {
+        pastDate = _offsetMonths(pastDate, 1);
+        let newDate = pastDate;
+        wordLookupPromisers.push(() => lookupWordByMonth(word, newDate.getFullYear(), newDate.getMonth() + 1, params));
+    }
+    return directly(CAPI_CONCURRENCE, wordLookupPromisers)
+}
+
+/**
+ * Add a specified no of months
+ * @param {*} date 
+ * @param {*} offset 
+ */
+function _offsetMonths(oldDate, offset) {
+        let dt = new Date(oldDate);
+        dt.setMonth(dt.getMonth()+ offset) ;
+        if (dt.getDate() < oldDate.getDate()) { dt.setDate(0); }
+        return dt;
 }
 
 /**
@@ -61,65 +91,65 @@ function yearSummary(word, year) {
     });
 }
 
-function condensedSummary(word, year) {
+/**
+ * Condensed summary using arrays
+ * @param {*} word 
+ * @param {*} year - Optional, if omitted will use 
+ * the last year relative to the current day
+ */
+function condensedSummary(word, year=null) {
     let summaryResponse = {
         months: [],
-        people: {},
-        topics: {},
-        organisations: {}
+        monthLabels:[],
+        monthCount: null
     }
-    return _fetchYear(word, year).then(responses => {
-        for(let response of responses) {
+    let fetchYear = year ? () => _fetchYear(word, year) : () => _fetchRelativeYear(word);
+    return fetchYear().then(responses => {
+        summaryResponse.monthCount = responses.length;
+        for(let [index, response] of responses.entries()) {
             let indexCount = null;
             let facets = null;
+            let date = new Date(response.params.month);
+            let month = date.getMonth()
+            let monthString = monthMap[month+1].substr(0,3);  
+            let yearSubstring = date.getFullYear().toString().substr(-2);
+            summaryResponse.monthLabels.push(`${monthString}`);
             if(response.hasOwnProperty('sapiObj')) {
                 indexCount = response.sapiObj.results[0].indexCount;
                 facets = response.sapiObj.results[0].facets;
             }
             summaryResponse.months.push(indexCount);              
             if(facets) {
-                let people = facets.filter(obj => obj.name === 'people').pop() 
-                let organisations = facets.filter(obj => obj.name === 'organisations').pop();
-                let topics = facets.filter(obj => obj.name === 'topics').pop();
-                
-
-                if(people) {
-                    for(let person of people.facetElements) {
-                        if(!(person.name in summaryResponse.people)) {
-                            summaryResponse.people[person.name] = new Array(12).fill(0);
-                        }
-                        let month = new Date(response.params.month).getMonth();
-                        if(person.count != null)
-                        summaryResponse.people[person.name][month] = person.count;
-                    }  
-                }
-
-                if(organisations) {
-                    for(let organisation of organisations.facetElements) {
-                        if(!(organisation.name in summaryResponse.organisations)) {
-                            summaryResponse.organisations[organisation.name] = new Array(12).fill(0);
-                        }
-                        let month = new Date(response.params.month).getMonth();
-                        if(organisation.count != null)
-                        summaryResponse.organisations[organisation.name][month] = organisation.count;
-                    }
-                }
-
-                if(topics) {
-                    for(let topic of topics.facetElements) {
-                        if(!(topic.name in summaryResponse.topics)) {
-                            summaryResponse.topics[topic.name] = new Array(12).fill(0);
-                        }
-                        let month = new Date(response.params.month).getMonth();
-                        if(topic.count != null)
-                        summaryResponse.topics[topic.name][month] = topic.count;
-                    }
-                }
+                summaryResponse = appendFacets(summaryResponse, facets, index);
             }
         }
-        
         return summaryResponse;
     })
+}
+
+/**
+ * Append all facets to the summary response
+ * Includes index counts as an array (representing each month) for each facet.
+ * @param {*} summaryResponse 
+ * @param {*} facets 
+ * @param {*} month 
+ */
+function appendFacets(summaryResponse, facets, month) {
+    for(let facet of facets) {
+        let name = facet.name;
+        if(typeof summaryResponse[name] == 'undefined') {
+            summaryResponse[name] = {}
+        }
+        for (let element of facet.facetElements) {
+            if(!(element.name in summaryResponse[name])) {
+                summaryResponse[name][element.name] = new Array(summaryResponse.monthCount).fill(0);
+            }
+            if(element.count != null) {
+                summaryResponse[name][element.name][month] = element.count;
+            }
+        }
+    }
+    return summaryResponse
 }
 
 /**
@@ -167,5 +197,5 @@ module.exports = {
     condensedSummary,
     lookupWordByYear,
     lookupWordByMonth,
-    yearSummary
+    yearSummary,
 }

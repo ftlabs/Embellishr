@@ -34,18 +34,30 @@ const mutations = {
 
 const actions = {
     FETCH_DATA({ commit }) {
-        api.getYearResults(this.state.word, this.state.year).then((response) => {
-            commit('updateSavedData', response)
-        }, () => {
-            console.log('Error fetching data')
-        })
+        if(typeof this.state.year === 'undefined' || !this.state.year) {
+            api.getRelativeYearResults(this.state.word).then((response) => {
+                commit('updateSavedData', response)
+            }, (e) => {
+                console.log('Error fetching relative year data')
+                console.log(e);
+            })
+        }
+        else {
+            api.getYearResults(this.state.word, this.state.year).then((response) => {
+                commit('updateSavedData', response)
+            }, (e) => {
+                console.log('Error fetching data')
+                console.log(e)
+            })
+        }
     },
 
     FETCH_SEARCH_TERMS({ commit }, numberOfTerms) {
         api.getRecentSearchTerms(numberOfTerms).then(response => {
             commit('updateRecentSearchTerms', response)
-        }, () => {
+        }, (e) => {
             console.log('Error fetching recent search terms')
+            console.log(e);
         })
     }
 }

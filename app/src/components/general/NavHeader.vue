@@ -14,7 +14,7 @@
 		<div class="o-header-services__container header-container">
 			<ul class="o-header-services__nav-list">
 				<li class="o-header-services__nav-item">
-						<router-link class="o-header-services__nav-link" to="/">Home</router-link>
+						<router-link class="o-header-services__nav-link" exact to="/">Home</router-link>
 				</li>
 				<li class="o-header-services__nav-item">
 					<router-link class="o-header-services__nav-link" to="/kiosk">Kiosk</router-link>

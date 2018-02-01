@@ -17,7 +17,11 @@
     export default {
 
         props: [
-            'kiosk'
+            'word',
+            'year',
+            'resultData',
+            'kiosk',
+            'labels'
         ],
 
         mounted() {
@@ -28,14 +32,8 @@
             DataChart,
         },
     
-        computed: mapGetters({
-            responseData: 'getResults',
-            year: 'getYear',
-            word: 'getWord'
-        }),
-    
         watch: {
-            responseData(newer, old) {
+            resultData(newer, old) {
                 this.updateData();
             }
         },
@@ -49,14 +47,14 @@
         methods: {
 
             updateData() {
-                let months = this.responseData[this.year].months;
+                let months = this.resultData;
                 this.createResultData(months)
             },
 
 
             initGraph() {    
                 this.$data.resultGraph = {
-                    labels: labels,
+                    labels: null,
                     datasets: [{
                         label: "",
                         data: [],
@@ -71,6 +69,7 @@
                 let label = `Mentions of "${this.word}" over ${this.year}`
                 this.$set(this.$data.resultGraph.datasets[0], "data", months)
                 this.$set(this.$data.resultGraph.datasets[0], "label", label)
+                this.$set(this.$data.resultGraph, "labels", this.labels);
                 this.$refs.resultsGraph.update();
             },
     
