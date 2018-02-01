@@ -44,9 +44,19 @@ export default {
                      }
 
                  },
+             },
+             gridLines: {
+                 display: true
              }
          }],
-         xAxes: [{ticks: {} }]
+         xAxes: [
+             {
+                ticks: {},
+                gridLines: {
+                 display: true
+             }
+             }
+        ]
      }
     }
     if(this.kiosk) {
