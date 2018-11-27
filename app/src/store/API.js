@@ -18,8 +18,8 @@ export default class API {
         }).then(resp => resp.json())
     }
 
-    getRecentSearchTerms(number) {
-        let url = `${BASE_URL}/topSearchTerms/${number}`
+    getDefaultSearchTerms() {
+        let url = `${BASE_URL}/topSearchTerms`;
         return fetch(url, {
             credentials: 'include'
         }).then(resp => resp.json())

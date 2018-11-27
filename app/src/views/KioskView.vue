@@ -6,7 +6,7 @@
                 <h1 class="o-typography-headline"><strong>&nbsp;Word Of The Year?&nbsp;</strong> "{{this.word}}" - {{this.year}}</h1>
             </div>
         </div>
-        <h3 v-if="loading" class="center o-typography-heading-level-3">Retrieving most recent search terms...
+        <h3 v-if="loading" class="center o-typography-heading-level-3">Retrieving search terms...
             <span class="o-loading o-loading--dark o-loading--small"></span>
         </h3>
         

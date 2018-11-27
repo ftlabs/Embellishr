@@ -26,7 +26,7 @@
     "@financial-times/s3o-middleware": "^2.0.4",
     "assert": "^1.4.1",
     "aws-sdk": "^2.7.10",
-    "chart.js": "2.7.1",
+    "chart.js": "^2.7.3",
     "debug": "^2.3.3",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
@@ -56,7 +56,7 @@
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack-dev-server": "^3.1.10"
   },
   "engines": {
     "node": "8.9.x"
