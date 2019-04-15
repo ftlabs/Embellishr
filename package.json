@@ -23,14 +23,14 @@
   },
   "homepage": "https://github.com/ftlabs/...#readme",
   "dependencies": {
-    "@financial-times/s3o-middleware": "^2.0.4",
+    "@financial-times/s3o-middleware": "^2.1.1",
     "assert": "^1.4.1",
-    "aws-sdk": "^2.403.0",
-    "chart.js": "^2.7.3",
+    "aws-sdk": "^2.437.0",
+    "chart.js": "^2.8.0",
     "debug": "^2.3.3",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
-    "express-handlebars": "^3.0.0",
+    "express-handlebars": "^3.0.2",
     "ffmpeg-static": "^2.0.0",
     "is-uuid": "^1.0.2",
     "md5": "^2.2.1",
@@ -38,10 +38,10 @@
     "rss": "^1.2.1",
     "striptags": "^2.1.1",
     "uuid": "^3.0.1",
-    "vue": "^2.6.6",
+    "vue": "^2.6.10",
     "vue-chartjs": "3.0.2",
-    "vue-multiselect": "^2.0.6",
-    "vue-router": "^3.0.1",
+    "vue-multiselect": "^2.1.4",
+    "vue-router": "^3.0.4",
     "vuex": "^3.1.0",
     "xml2js": "^0.4.17"
   },
@@ -51,12 +51,12 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
+    "css-loader": "^2.1.1",
     "file-loader": "^1.1.4",
     "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.6.6",
+    "vue-template-compiler": "^2.6.10",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.3.1"
   },
   "engines": {
     "node": "8.9.x"
