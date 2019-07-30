@@ -7,8 +7,8 @@ if (! CAPI_KEY ) {
 	throw new Error('ERROR: CAPI_KEY not specified in env');
 }
 
-const CAPI_PATH = 'http://api.ft.com/enrichedcontent/';
-const SAPI_PATH = 'http://api.ft.com/content/search/v1';
+const CAPI_PATH = 'https://api.ft.com/enrichedcontent/';
+const SAPI_PATH = 'https://api.ft.com/content/search/v1';
 const SimpleCache = require('./simple-cache');
 const SearchCache = new SimpleCache();
 const CACHE_TIME = (process.env.SERVER_CACHE_DURATION_MILLIS || 15 * 60) * 1000; //Default 15 minute server cache
